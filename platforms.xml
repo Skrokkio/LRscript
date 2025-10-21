@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<platforms>
+	<version>0.1.3</version>
+	<platform>
+		<name>Mame2010 romset 0.139</name>
+		<cache_path>./cache/mame2010</cache_path>
+		<roms_path>/userdata/roms/mame</roms_path>
+		<xml>./dats/MAME0.139u4.dat</xml>
+		<ingame>adb.arcadeitalia.net/?mame={rom_name}&type=ingame&resize=0</ingame>
+		<title>adb.arcadeitalia.net/?mame={rom_name}&type=title&resize=0</title>
+		<info>adb.arcadeitalia.net/service_scraper.php?ajax=query_mame&game_name={rom_name}&lang=it</info>
+		<rom>https://archive.org/download/MAME0.139RomCollectionByGhostware/</rom>
+		<image>mame.png</image>
+	</platform>
+	<platform>
+		<name>MAME_2003-Plus</name>
+		<cache_path>./cache/MAME_2003-Plus</cache_path>
+		<roms_path>/userdata/roms/mame078plus</roms_path>
+		<xml>./dats/mame2003-plus.xml</xml>
+		<ingame>adb.arcadeitalia.net/?mame={rom_name}&type=ingame&resize=0</ingame>
+		<title>adb.arcadeitalia.net/?mame={rom_name}&type=title&resize=0</title>
+		<info>adb.arcadeitalia.net/service_scraper.php?ajax=query_mame&game_name={rom_name}&lang=it</info>
+		<rom>https://archive.org/download/MAME_2003-Plus_Reference/roms/</rom>
+		<image>mame2003plus.png</image>
+	</platform>
+	<platform>
+		<name>FBNeo1.0.0.03</name>
+		<cache_path>./cache/FBNeo</cache_path>
+		<roms_path>/userdata/roms/fbneo</roms_path>
+		<xml>./dats/FBNeo1.0.0.03.dat</xml>
+		<ingame>adb.arcadeitalia.net/?mame={rom_name}&type=ingame&resize=0</ingame>
+		<title>adb.arcadeitalia.net/?mame={rom_name}&type=title&resize=0</title>
+		<info>adb.arcadeitalia.net/service_scraper.php?ajax=query_mame&game_name={rom_name}&lang=it</info>
+		<rom>https://archive.org/download/svcpcb.7z/Vintage%20Arcade/</rom>
+		<image>fbneo.png</image>
+	</platform>
+</platforms>
