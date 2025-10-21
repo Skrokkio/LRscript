@@ -5,10 +5,10 @@ set -e
 echo "=== LRscript Retro Game Manager Installer ==="
 
 # Controlla se Python è installato
-if ! command -v python &> /dev/null; then
-    echo "Errore: Python non trovato!"
-    exit 1
-fi
+# if ! command -v python &> /dev/null; then
+#     echo "Errore: Python non trovato!"
+#     exit 1
+# fi
 
 # Crea cartella in ports di Batocera
 INSTALL_DIR="/userdata/roms/ports/LRscript"
