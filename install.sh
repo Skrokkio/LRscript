@@ -5,8 +5,8 @@ set -e
 echo "=== LRscript Retro Game Manager Installer ==="
 
 # Controlla se Python è installato
-if ! command -v python3 &> /dev/null; then
-    echo "Errore: Python3 non trovato!"
+if ! command -v python &> /dev/null; then
+    echo "Errore: Python non trovato!"
     exit 1
 fi
 
