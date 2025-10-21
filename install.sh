@@ -21,13 +21,13 @@ git clone https://github.com/Skrokkio/LRscript.git .
 
 # Installa dipendenze
 echo "Installazione dipendenze..."
-pip3 install pygame requests
+pip install pygame requests
 
 # Crea script di avvio
 cat > start_lrscript.sh << 'EOF'
 #!/bin/bash
 cd /userdata/roms/ports/LRscript
-python3 __main__.py
+python __main__.py
 EOF
 
 chmod +x start_lrscript.sh

@@ -13,6 +13,6 @@ cd "$(dirname "$0")"
 source pygame_env/bin/activate
 
 # Avvia l'applicazione
-python3 __main__.py
+python __main__.py
 
 echo "👋 LRscript chiuso"
