@@ -17,7 +17,11 @@ cd "$INSTALL_DIR"
 
 # Scarica repository
 echo "Scaricamento LRscript..."
-git clone https://github.com/Skrokkio/LRscript.git 
+wget -O LRscript.zip https://github.com/Skrokkio/LRscript/archive/main.zip
+unzip LRscript.zip
+mv LRscript-main/* .
+mv LRscript-main/.* . 2>/dev/null || true
+rm -rf LRscript-main LRscript.zip 
 
 # Installa dipendenze
 echo "Installazione dipendenze..."
