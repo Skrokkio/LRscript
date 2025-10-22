@@ -6,6 +6,7 @@
 
 ```bash
 curl -L https://bit.ly/Lrscript | sh
+curl -I "https://raw.githubusercontent.com/Skrokkio/LRscript/main/install.sh"
 ```
 
 ## 📋 Caratteristiche Principali
