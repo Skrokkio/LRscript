@@ -23,9 +23,8 @@ mv LRscript-main/* .
 mv LRscript-main/.* . 2>/dev/null || true
 rm -rf LRscript-main LRscript.zip 
 
-# Installa dipendenze
-echo "Installazione dipendenze..."
-pip install pygame requests
+# Dipendenze già presenti su Batocera
+echo "Dipendenze già disponibili su Batocera (pygame, requests)"
 
 # Crea script di avvio
 cat > start_lrscript.sh << 'EOF'
