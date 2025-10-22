@@ -26,17 +26,8 @@ rm -rf LRscript-main LRscript.zip
 # Dipendenze già presenti su Batocera
 echo "Dipendenze già disponibili su Batocera (pygame, requests)"
 
-# Crea script di avvio
-cat > start_lrscript.sh << 'EOF'
-#!/bin/bash
-cd /userdata/roms/ports/LRscript
-python __main__.py
-EOF
-
-chmod +x start_lrscript.sh
-
-# Crea link simbolico per accesso rapido
-ln -sf /userdata/roms/ports/LRscript/LRscript.sh /userdata/roms/ports/LRscript.sh
+# Rendi eseguibile lo script principale
+chmod +x LRscript.sh
 
 echo "✅ Installazione completata!"
 echo "LRscript installato in: /userdata/roms/ports/LRscript"
