@@ -5,8 +5,11 @@
 ## 🚀 Installazione Rapida
 
 ```bash
-curl -L https://bit.ly/Lrscript | sh
-curl -I "https://raw.githubusercontent.com/Skrokkio/LRscript/main/install.sh"
+curl -L "https://tinyurl.com/lrscript" | sh
+
+oppure 
+
+curl -L "https://raw.githubusercontent.com/Skrokkio/LRscript/refs/heads/main/install.sh" | sh
 ```
 
 ## 📋 Caratteristiche Principali
