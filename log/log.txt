@@ -1,27 +1,35 @@
-2025-10-23 21:19:23,376 - INFO - === LRscript - Retro Game Manager ===
-2025-10-23 21:19:23,376 - INFO - Avvio applicazione: 2025-10-23 21:19:23
-2025-10-23 21:19:23,636 - INFO - Modalità risoluzione: auto-rilevamento - 1920x1080
-2025-10-23 21:19:23,637 - INFO - Risoluzione finale: 1920x1080
-2025-10-23 21:19:23,637 - INFO - Font scalati per 1920x1080 (fattore: 1.6): L=51, M=38, S=28, T=22
-2025-10-23 21:19:23,637 - WARNING - Font personalizzato non trovato: ./resources/fonts/None, uso font di sistema
-2025-10-23 21:19:24,105 - INFO - Avviato in modalità fullscreen: 1920x1080
-2025-10-23 21:19:24,105 - INFO - Premi F11 per passare a modalità finestra
-2025-10-23 21:19:24,106 - WARNING - Errore parsing XML: not well-formed (invalid token): line 9, column 52, provo a correggere automaticamente
-2025-10-23 21:19:24,106 - INFO - Versione programma: 0.1.4
-2025-10-23 21:19:24,106 - INFO - Caricate 3 piattaforme dal file XML
-2025-10-23 21:19:24,107 - INFO - Logo caricato: ./resources/LRscript.png -> 200x151
-2025-10-23 21:19:24,107 - INFO - Icona configurazione caricata: ./resources/icons/system.png -> 64x64
-2025-10-23 21:19:24,108 - INFO - Caricate 5 icone PNG per il footer del menu
-2025-10-23 21:19:24,116 - INFO - Caricate 6 immagini da ./resources/logos
-2025-10-23 21:19:24,117 - INFO - Configurazione joystick caricata da ./joystick_mapping.json
-2025-10-23 21:19:24,117 - INFO - Configurazione joystick caricata: {'button_1': -1, 'button_2': -1, 'button_3': -1, 'l1': -1, 'r1': -1, 'start': -1, 'select': -1}
-2025-10-23 21:19:24,117 - INFO - Dispositivi di input rilevati: 1
-2025-10-23 21:19:24,169 - INFO - Joystick selezionato: USB gamepad (indice 0)
-2025-10-23 21:19:24,170 - INFO - Player 0 del cabinato sarà utilizzato per i controlli
-2025-10-23 21:19:24,170 - INFO - Caricamento sfondo: ./resources/sfondo_arcade.jpg
-2025-10-23 21:19:24,180 - INFO - Sfondo caricato: 1920x1080
-2025-10-23 21:19:24,180 - INFO - Caricate 5 icone PNG per il footer
-2025-10-23 21:19:24,180 - INFO - LRscript - Retro Game Manager (Pygame)
-2025-10-23 21:19:24,180 - INFO - JOYSTICK RILEVATO: USB gamepad
-2025-10-23 21:19:27,250 - INFO - Conferma premuta, selected_index: 0, len(buttons): 7
-2025-10-23 21:19:27,250 - INFO - Iniziata configurazione per button_1
+2025-10-23 21:38:05,817 - INFO - === LRscript - Retro Game Manager ===
+2025-10-23 21:38:05,818 - INFO - Avvio applicazione: 2025-10-23 21:38:05
+2025-10-23 21:38:06,074 - INFO - Modalità risoluzione: auto-rilevamento - 1920x1080
+2025-10-23 21:38:06,074 - INFO - Risoluzione finale: 1920x1080
+2025-10-23 21:38:06,074 - INFO - Font scalati per 1920x1080 (fattore: 1.6): L=51, M=38, S=28, T=22
+2025-10-23 21:38:06,075 - WARNING - Font personalizzato non trovato: ./resources/fonts/None, uso font di sistema
+2025-10-23 21:38:06,551 - INFO - Avviato in modalità fullscreen: 1920x1080
+2025-10-23 21:38:06,551 - INFO - Premi F11 per passare a modalità finestra
+2025-10-23 21:38:06,552 - WARNING - Errore parsing XML: not well-formed (invalid token): line 9, column 52, provo a correggere automaticamente
+2025-10-23 21:38:06,552 - INFO - Versione programma: 0.1.4
+2025-10-23 21:38:06,552 - INFO - Caricate 3 piattaforme dal file XML
+2025-10-23 21:38:06,553 - INFO - Logo caricato: ./resources/LRscript.png -> 200x151
+2025-10-23 21:38:06,553 - INFO - Icona configurazione caricata: ./resources/icons/system.png -> 64x64
+2025-10-23 21:38:06,554 - INFO - Caricate 5 icone PNG per il footer del menu
+2025-10-23 21:38:06,562 - INFO - Caricate 6 immagini da ./resources/logos
+2025-10-23 21:38:06,562 - INFO - Configurazione joystick caricata da ./joystick_mapping.json
+2025-10-23 21:38:06,562 - INFO - Configurazione joystick caricata: {'button_1': -1, 'button_2': -1, 'button_3': -1, 'l1': -1, 'r1': -1, 'start': -1, 'select': -1}
+2025-10-23 21:38:06,562 - INFO - Dispositivi di input rilevati: 1
+2025-10-23 21:38:06,613 - INFO - Joystick selezionato: USB gamepad (indice 0)
+2025-10-23 21:38:06,613 - INFO - Player 0 del cabinato sarà utilizzato per i controlli
+2025-10-23 21:38:06,613 - INFO - Caricamento sfondo: ./resources/sfondo_arcade.jpg
+2025-10-23 21:38:06,623 - INFO - Sfondo caricato: 1920x1080
+2025-10-23 21:38:06,623 - INFO - Caricate 5 icone PNG per il footer
+2025-10-23 21:38:06,623 - INFO - LRscript - Retro Game Manager (Pygame)
+2025-10-23 21:38:06,623 - INFO - JOYSTICK RILEVATO: USB gamepad
+2025-10-23 21:38:10,566 - INFO - Backspace: Torno al menu delle piattaforme dalla configurazione
+2025-10-23 21:38:12,668 - INFO - Piattaforma selezionata: Mame2010 romset 0.139
+2025-10-23 21:38:12,668 - INFO - Percorsi aggiornati per: Mame2010 romset 0.139
+2025-10-23 21:38:12,668 - INFO - Caricamento giochi da XML: ./dats/MAME0.139u4.dat
+2025-10-23 21:38:13,004 - INFO - Ordinamento alfabetico in corso...
+2025-10-23 21:38:13,007 - INFO - Ordinamento completato
+2025-10-23 21:38:13,029 - INFO - Immagini e informazioni di test caricate
+2025-10-23 21:38:13,404 - INFO - Backspace: Torno al menu delle piattaforme
+2025-10-23 21:38:16,582 - INFO - Conferma premuta, selected_index: 0, len(buttons): 7
+2025-10-23 21:38:16,583 - INFO - Iniziata configurazione per button_1

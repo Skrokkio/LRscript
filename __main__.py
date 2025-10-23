@@ -504,6 +504,7 @@ class ArcadeUI:
                                 result = self.config_ui.handle_input('confirm')
                             elif event.button == config['button_2']:
                                 result = self.config_ui.handle_input('back')
+                                logger.info(f"Button2 premuto, risultato: {result}")
                             elif event.button == config['button_3']:
                                 result = self.config_ui.handle_input('download_rom')
                             elif event.button == config['l1']:
@@ -532,6 +533,8 @@ class ArcadeUI:
                     if result == 'exit':
                         logger.info("Uscita dalla schermata config")
                         self.current_screen = 'menu'
+                    else:
+                        logger.info(f"Risultato non gestito: {result}")
                     
                     # IMPORTANTE: In schermata config, NON processare il pulsante con JoystickManager normale
                     # Usa 'continue' per saltare al prossimo evento
@@ -657,6 +660,11 @@ class ArcadeUI:
             elif event.key == pygame.K_ESCAPE:
                 # ESC esce dall'app anche nella schermata di configurazione
                 return False
+            elif event.key == pygame.K_BACKSPACE:
+                # BACKSPACE torna al menu dalla schermata di configurazione
+                self.current_screen = 'menu'
+                logger.info("Backspace: Torno al menu delle piattaforme dalla configurazione")
+                return
             else:
                 return  # Ignora altri tasti
             
@@ -705,6 +713,10 @@ class ArcadeUI:
                 # Torna al menu delle piattaforme
                 self.current_screen = 'menu'
                 logger.info("Backspace: Torno al menu delle piattaforme")
+            elif self.current_screen == 'config':
+                # Torna al menu delle piattaforme dalla schermata di configurazione
+                self.current_screen = 'menu'
+                logger.info("Backspace: Torno al menu delle piattaforme dalla configurazione")
             else:
                 # Nel menu, backspace non fa nulla (non c'è livello precedente)
                 logger.debug("Backspace: Nel menu - nessuna azione")
