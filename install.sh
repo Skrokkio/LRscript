@@ -1,4 +1,4 @@
-fix#!/bin/bash
+#!/bin/bash
 # LRscript Installer Avanzato con Interfaccia Grafica
 set -e
 
@@ -24,6 +24,52 @@ console_log() {
     fi
 }
 
+# Funzione per chiedere conferma all'utente
+ask_user_confirmation() {
+    local response
+    if [ -x "$XTERM" ]; then
+        # Usa xterm per chiedere conferma
+        response=$(LC_ALL=C $XTERM -fullscreen -fg yellow -bg black -fs $TEXT_SIZE -e "
+            echo '========================================'
+            echo '    LRscript Installer'
+            echo '========================================'
+            echo ''
+            echo 'Questa installazione sovrascriverà'
+            echo 'installazione precedente se presente'
+            echo ''
+            echo 'Premi Y per continuare o N per uscire'
+            echo 'dal programma'
+            echo ''
+            echo '========================================'
+            echo -n 'La tua scelta (Y/N): '
+            read -n 1 response
+            echo
+            echo \"Hai scelto: \$response\"
+            echo \"\$response\"
+        " 2>/dev/null)
+    else
+        # Fallback per console normale
+        echo "========================================"
+        echo "    LRscript Installer"
+        echo "========================================"
+        echo ""
+        echo "Questa installazione sovrascriverà"
+        echo "installazione precedente se presente"
+        echo ""
+        echo -n "Premi Y per continuare o N per uscire dal programma: "
+        read -n 1 response
+        echo
+    fi
+    
+    # Converti in maiuscolo e controlla la risposta
+    response=$(echo "$response" | tr '[:lower:]' '[:upper:]')
+    if [ "$response" = "Y" ] || [ "$response" = "YES" ]; then
+        return 0  # Confermato
+    else
+        return 1  # Annullato
+    fi
+}
+
 # Funzione per gestire errori
 error_exit() {
     local error_msg="$1"
@@ -44,6 +90,28 @@ export LC_ALL=C
 # Inizializzare il log di display
 echo "[LRscript Install] Starting LRscript Installation..." > "$DISPLAY_LOG"
 
+# Chiedere conferma all'utente prima di procedere
+console_log "Asking user confirmation..."
+if ! ask_user_confirmation; then
+    console_log "Installation cancelled by user"
+    if [ -x "$XTERM" ]; then
+        LC_ALL=C $XTERM -fullscreen -fg red -bg black -fs $TEXT_SIZE -e "
+            echo '========================================'
+            echo '    Installazione Annullata'
+            echo '========================================'
+            echo ''
+            echo 'L''installazione è stata annullata'
+            echo 'dall''utente.'
+            echo ''
+            echo 'Premi un tasto per uscire...'
+            read -n 1
+        "
+    fi
+    exit 0
+fi
+
+console_log "User confirmed installation, proceeding..."
+
 # Avviare xterm in background per mostrare il progresso
 if [ -x "$XTERM" ]; then
     LC_ALL=C $XTERM -fullscreen -fg $TEXT_COLOR -bg black -fs $TEXT_SIZE -e "tail -f $DISPLAY_LOG" &
@@ -63,77 +131,15 @@ console_log "=== LRscript Retro Game Manager Installer ==="
 # fi
 
 # Crea cartella in ports di Batocera
-console_log "Checking installation directory..."
+console_log "Creating installation directory..."
 INSTALL_DIR="/userdata/roms/ports/LRscript"
 
-# Controlla se la cartella esiste già
+# Rimuovi installazione precedente se presente
 if [ -d "$INSTALL_DIR" ]; then
-    console_log "Directory $INSTALL_DIR already exists!"
-    
-    # Se xterm è attivo, chiudilo temporaneamente per il prompt interattivo
-    if [ -n "$XTERM_PID" ] && kill -0 "$XTERM_PID" 2>/dev/null; then
-        console_log "Preparing interactive prompt..."
-        kill "$XTERM_PID" 2>/dev/null
-        sleep 1
-    fi
-    
-    # Mostra il prompt interattivo in xterm
-    if [ -x "$XTERM" ]; then
-        RESPONSE_FILE="/tmp/lrscript_response.txt"
-        echo "" > "$RESPONSE_FILE"
-        
-        LC_ALL=C $XTERM -fullscreen -fg yellow -bg black -fs $TEXT_SIZE -e "
-            echo '=========================================='
-            echo 'LRscript Installation'
-            echo '=========================================='
-            echo ''
-            echo 'La cartella di destinazione esiste già:'
-            echo '$INSTALL_DIR'
-            echo ''
-            echo 'Vuoi sovrascriverla? (s/n): '
-            read -r response
-            echo \"\$response\" > '$RESPONSE_FILE'
-            echo ''
-            echo 'Risposta: '\$response
-            echo 'Premi un tasto per continuare...'
-            read -n 1
-        " &
-        
-        # Aspetta che l'utente risponda
-        while [ ! -s "$RESPONSE_FILE" ]; do
-            sleep 0.5
-        done
-        
-        response=$(cat "$RESPONSE_FILE" 2>/dev/null | tr -d '\n\r')
-        rm -f "$RESPONSE_FILE"
-        
-        # Riapri xterm per continuare l'installazione
-        console_log "Restarting xterm interface..."
-        LC_ALL=C $XTERM -fullscreen -fg $TEXT_COLOR -bg black -fs $TEXT_SIZE -e "tail -f $DISPLAY_LOG" &
-        XTERM_PID=$!
-        sleep 1
-    else
-        # Fallback per console normale
-        echo ""
-        echo "La cartella di destinazione esiste già: $INSTALL_DIR"
-        echo "Vuoi sovrascriverla? (s/n): "
-        read -r response
-    fi
-    
-    if [[ "$response" =~ ^[Ss]$ ]]; then
-        console_log "Rimuovendo cartella esistente..."
-        rm -rf "$INSTALL_DIR"
-        if [ $? -ne 0 ]; then
-            error_exit "Failed to remove existing directory"
-        fi
-        console_log "Cartella rimossa con successo"
-    else
-        console_log "Installazione annullata dall'utente"
-        error_exit "Installation cancelled by user"
-    fi
+    console_log "Removing previous installation..."
+    rm -rf "$INSTALL_DIR"
 fi
 
-console_log "Creating installation directory..."
 mkdir -p "$INSTALL_DIR"
 if [ $? -ne 0 ]; then
     error_exit "Failed to create installation directory"
