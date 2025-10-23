@@ -73,36 +73,20 @@ handle_existing_directory() {
         # Pausa per dare tempo all'utente di leggere
         sleep 2
         
-        # In modalità grafica, usa zenity se disponibile
-        if [ -x "$XTERM" ] && command -v zenity &> /dev/null; then
-            console_log "Showing graphical dialog..."
-            if zenity --question --title="LRscript Installer" --text="Directory $install_dir already exists.\nDo you want to overwrite it?" --width=400 --timeout=30; then
-                console_log "User confirmed: overwriting existing directory"
-                rm -rf "$install_dir"
-                if [ $? -ne 0 ]; then
-                    error_exit "Failed to remove existing directory"
-                fi
-                console_log "Existing directory removed successfully"
-            else
-                console_log "Installation cancelled by user"
-                exit 0
+        # Input semplice da tastiera
+        console_log "Do you want to overwrite it? (y/N) - waiting 30 seconds..."
+        read -t 30 -p "Overwrite existing directory? (y/N): " -n 1 -r
+        echo
+        if [[ $REPLY =~ ^[Yy]$ ]]; then
+            console_log "User confirmed: overwriting existing directory"
+            rm -rf "$install_dir"
+            if [ $? -ne 0 ]; then
+                error_exit "Failed to remove existing directory"
             fi
+            console_log "Existing directory removed successfully"
         else
-            # Modalità console con timeout
-            console_log "Do you want to overwrite it? (y/N) - waiting 30 seconds..."
-            read -t 30 -p "Overwrite existing directory? (y/N): " -n 1 -r
-            echo
-            if [[ $REPLY =~ ^[Yy]$ ]]; then
-                console_log "User confirmed: overwriting existing directory"
-                rm -rf "$install_dir"
-                if [ $? -ne 0 ]; then
-                    error_exit "Failed to remove existing directory"
-                fi
-                console_log "Existing directory removed successfully"
-            else
-                console_log "Installation cancelled by user (timeout or no response)"
-                exit 0
-            fi
+            console_log "Installation cancelled by user (timeout or no response)"
+            exit 0
         fi
     fi
 }
