@@ -27,37 +27,53 @@ console_log() {
 # Funzione per chiedere conferma all'utente
 ask_user_confirmation() {
     local response
-    local temp_file="/tmp/lrscript_user_response"
     
+    # Prova prima con dialog se disponibile
+    if command -v dialog >/dev/null 2>&1; then
+        dialog --title "LRscript Installer" \
+               --yesno "Questa installazione sovrascriverà installazione precedente se presente.\n\nVuoi continuare?" \
+               10 60
+        return $?
+    fi
+    
+    # Fallback: usa xterm con un approccio più semplice
     if [ -x "$XTERM" ]; then
-        # Usa xterm per chiedere conferma e salva la risposta in un file temporaneo
-        LC_ALL=C $XTERM -fullscreen -fg yellow -bg black -fs $TEXT_SIZE -e "
-            echo '========================================'
-            echo '    LRscript Installer'
-            echo '========================================'
-            echo ''
-            echo 'Questa installazione sovrascriverà'
-            echo 'installazione precedente se presente'
-            echo ''
-            echo 'Premi Y per continuare o N per uscire'
-            echo 'dal programma'
-            echo ''
-            echo '========================================'
-            echo -n 'La tua scelta (Y/N): '
-            read -n 1 response
-            echo
-            echo \"Hai scelto: \$response\"
-            echo \"\$response\" > $temp_file
-            sleep 1
-        "
+        # Crea uno script temporaneo per gestire l'input
+        local temp_script="/tmp/lrscript_confirm.sh"
+        cat > "$temp_script" << 'EOF'
+#!/bin/bash
+echo '========================================'
+echo '    LRscript Installer'
+echo '========================================'
+echo ''
+echo 'Questa installazione sovrascriverà'
+echo 'installazione precedente se presente'
+echo ''
+echo 'Premi Y per continuare o N per uscire'
+echo 'dal programma'
+echo ''
+echo '========================================'
+echo -n 'La tua scelta (Y/N): '
+read -n 1 response
+echo
+echo "Hai scelto: $response"
+echo "$response" > /tmp/lrscript_response.txt
+EOF
+        chmod +x "$temp_script"
         
-        # Leggi la risposta dal file temporaneo
-        if [ -f "$temp_file" ]; then
-            response=$(cat "$temp_file" 2>/dev/null)
-            rm -f "$temp_file"
+        # Esegui lo script in xterm
+        LC_ALL=C $XTERM -fullscreen -fg yellow -bg black -fs $TEXT_SIZE -e "$temp_script"
+        
+        # Leggi la risposta
+        if [ -f "/tmp/lrscript_response.txt" ]; then
+            response=$(cat "/tmp/lrscript_response.txt" 2>/dev/null)
+            rm -f "/tmp/lrscript_response.txt"
         else
             response=""
         fi
+        
+        # Pulisci lo script temporaneo
+        rm -f "$temp_script"
     else
         # Fallback per console normale
         echo "========================================"
@@ -103,25 +119,50 @@ echo "[LRscript Install] Starting LRscript Installation..." > "$DISPLAY_LOG"
 
 # Chiedere conferma all'utente prima di procedere
 console_log "Asking user confirmation..."
-if ! ask_user_confirmation; then
-    console_log "Installation cancelled by user"
-    if [ -x "$XTERM" ]; then
-        LC_ALL=C $XTERM -fullscreen -fg red -bg black -fs $TEXT_SIZE -e "
-            echo '========================================'
-            echo '    Installazione Annullata'
-            echo '========================================'
-            echo ''
-            echo 'L''installazione è stata annullata'
-            echo 'dall''utente.'
-            echo ''
-            echo 'Premi un tasto per uscire...'
-            read -n 1
-        "
-    fi
-    exit 0
-fi
 
-console_log "User confirmed installation, proceeding..."
+# Se xterm non è disponibile, usa un approccio più semplice
+if [ ! -x "$XTERM" ]; then
+    console_log "xterm not available, using simple console confirmation"
+    echo ""
+    echo "========================================"
+    echo "    LRscript Installer"
+    echo "========================================"
+    echo ""
+    echo "Questa installazione sovrascriverà"
+    echo "installazione precedente se presente"
+    echo ""
+    echo -n "Premi Y per continuare o N per uscire dal programma: "
+    read -n 1 user_choice
+    echo ""
+    
+    user_choice=$(echo "$user_choice" | tr '[:lower:]' '[:upper:]')
+    if [ "$user_choice" != "Y" ] && [ "$user_choice" != "YES" ]; then
+        console_log "Installation cancelled by user"
+        echo "Installazione annullata dall'utente."
+        exit 0
+    fi
+    console_log "User confirmed installation, proceeding..."
+else
+    # Usa la funzione ask_user_confirmation solo se xterm è disponibile
+    if ! ask_user_confirmation; then
+        console_log "Installation cancelled by user"
+        if [ -x "$XTERM" ]; then
+            LC_ALL=C $XTERM -fullscreen -fg red -bg black -fs $TEXT_SIZE -e "
+                echo '========================================'
+                echo '    Installazione Annullata'
+                echo '========================================'
+                echo ''
+                echo 'L''installazione è stata annullata'
+                echo 'dall''utente.'
+                echo ''
+                echo 'Premi un tasto per uscire...'
+                read -n 1
+            "
+        fi
+        exit 0
+    fi
+    console_log "User confirmed installation, proceeding..."
+fi
 
 # Avviare xterm in background per mostrare il progresso
 if [ -x "$XTERM" ]; then
