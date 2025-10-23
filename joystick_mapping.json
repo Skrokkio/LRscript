@@ -1,9 +1,9 @@
 {
-  "button_1": 2,
-  "button_2": 1,
-  "button_3": 0,
-  "l1": 4,
-  "r1": 5,
-  "start": 9,
-  "select": 8
+  "button_1": -1,
+  "button_2": -1,
+  "button_3": -1,
+  "l1": -1,
+  "r1": -1,
+  "start": -1,
+  "select": -1
 }

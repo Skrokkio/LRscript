@@ -23,9 +23,7 @@ echo "Avvio installazione LRscript..."
 # Funzione per chiedere conferma all'utente
 ask_user_confirmation() {
     echo ""
-    echo "Questa installazione sovrascriverà"
-    echo "installazione precedente se presente"
-    echo ""
+    echo "Questa installazione sovrascriverà installazione precedente se presente"
     
     sleep 2 # Attesa di 2 secondi
     echo ""
@@ -83,8 +81,6 @@ fi
 cd "$INSTALL_DIR"
 
 # Scarica repository
-sleep 1 # Attesa di 1 secondo
-echo ""
 echo "Scaricamento LRscript da GitHub..."
 wget -O LRscript.zip https://github.com/Skrokkio/LRscript/archive/main.zip
 if [ $? -ne 0 ]; then
