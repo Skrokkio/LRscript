@@ -28,8 +28,8 @@ ask_user_confirmation() {
     echo "Questa installazione sovrascriverà"
     echo "installazione precedente se presente"
     echo ""
-    echo -n "Premi Y per continuare o N per uscire dal programma: "
-    read -n 1 user_choice
+    read -r -p "Premi Y per continuare o N per uscire dal programma: " user_choice
+    user_choice=${user_choice:0:1}
     echo ""
     
     # Converti in maiuscolo e controlla la risposta
