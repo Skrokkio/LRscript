@@ -32,7 +32,7 @@ ask_user_confirmation() {
     # Controlla se siamo in un terminale interattivo
     if [ -t 0 ]; then
         # Terminale interattivo - chiedi conferma
-        echo -n "Premi Y per continuare o N per uscire dal programma: "
+        echo "Premi Y per continuare o N per uscire dal programma: "
         read user_choice
         # Prendi solo il primo carattere
         user_choice=$(echo "$user_choice" | cut -c1)
@@ -136,7 +136,7 @@ echo "Percorso: /userdata/roms/ports/LRscript"
 echo "Per avviare: /userdata/roms/ports/LRscript/LRscript.sh"
 echo "Oppure dal menu Ports di Batocera"
 echo ""
-echo "Premi un tasto per uscire..."
-read -n 1
+echo "Premi INVIO per uscire..."
+read dummy_var
 
 exit 0
