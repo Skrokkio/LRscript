@@ -460,8 +460,18 @@ class JoystickManager:
         # Verifica lo stato attuale dei pulsanti dal joystick
         if self.joystick:
             config = self.config.current_mapping
-            l1_currently_pressed = self.joystick.get_button(config['l1'])
-            r1_currently_pressed = self.joystick.get_button(config['r1'])
+            # Controlla che i pulsanti siano mappati correttamente
+            l1_button = config.get('l1', -1)
+            r1_button = config.get('r1', -1)
+            
+            # Solo se i pulsanti sono mappati correttamente (non -1)
+            if l1_button >= 0 and r1_button >= 0:
+                l1_currently_pressed = self.joystick.get_button(l1_button)
+                r1_currently_pressed = self.joystick.get_button(r1_button)
+            else:
+                # Se i pulsanti non sono mappati, considera come non premuti
+                l1_currently_pressed = False
+                r1_currently_pressed = False
             
             # Se L1 non è più premuto fisicamente, resetta il tracking
             if self.l1_pressed and not l1_currently_pressed:

@@ -69,7 +69,7 @@ FONT_SCALE_FACTOR = 1.6 # Riduce le dimensioni del font (0.5 = metà, 1.0 = norm
 # =============================================================================
 # CONFIGURAZIONE RISOLUZIONE - MODIFICA QUESTO VALORE PER CAMBIARE RISOLUZIONE
 # =============================================================================
-RESOLUTION_MODE = 1 # 1 = 1280x1024 forzata, 2 = auto-rilevamento (default)
+RESOLUTION_MODE = 2 # 1 = 1280x1024 forzata, 2 = auto-rilevamento (default)
 # =============================================================================
 
 # Colori arcade ispirati a RGSX
@@ -653,8 +653,10 @@ class ArcadeUI:
                 self.enter_press_time = time.time()
                 self.enter_held = False
                 # Non processare immediatamente, aspetta il rilascio
+                result = None  # Inizializza result per evitare errori
             elif event.key == pygame.K_ESCAPE:
-                result = self.config_ui.handle_input('back')
+                # ESC esce dall'app anche nella schermata di configurazione
+                return False
             else:
                 return  # Ignora altri tasti
             

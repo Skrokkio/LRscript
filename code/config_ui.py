@@ -178,11 +178,11 @@ class ConfigUI:
                 self.capture_mode = False
                 self.capturing_for = None
                 return None  # Continua nella schermata config
-            elif action == 'back':
-                # Annulla cattura
-                self.capture_mode = False
-                self.capturing_for = None
-                return None  # Continua nella schermata config
+        elif action == 'back':
+            # Annulla cattura
+            self.capture_mode = False
+            self.capturing_for = None
+            return None  # Continua nella schermata config
         else:
             # Navigazione normale
             if action == 'up':
@@ -193,6 +193,12 @@ class ConfigUI:
                 if self.selected_index < max_index:
                     self.selected_index += 1
             elif action == 'confirm':
+                # Se siamo in modalità cattura, annulla la cattura
+                if self.capture_mode:
+                    self.capture_mode = False
+                    self.capturing_for = None
+                    return None  # Continua nella schermata config
+                
                 logger.info(f"Conferma premuta, selected_index: {self.selected_index}, len(buttons): {len(self.buttons)}")
                 if self.selected_index < len(self.buttons):
                     # Configura pulsante
