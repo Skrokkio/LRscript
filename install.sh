@@ -62,9 +62,54 @@ console_log "=== LRscript Retro Game Manager Installer ==="
 #     error_exit "Python not found"
 # fi
 
+# Funzione per gestire cartella esistente
+handle_existing_directory() {
+    local install_dir="$1"
+    
+    if [ -d "$install_dir" ]; then
+        console_log "⚠️  Directory already exists: $install_dir"
+        console_log "Do you want to overwrite it? (y/N)"
+        
+        # In modalità grafica, usa zenity se disponibile
+        if [ -x "$XTERM" ] && command -v zenity &> /dev/null; then
+            if zenity --question --title="LRscript Installer" --text="Directory $install_dir already exists.\nDo you want to overwrite it?" --width=400; then
+                console_log "User confirmed: overwriting existing directory"
+                rm -rf "$install_dir"
+                if [ $? -ne 0 ]; then
+                    error_exit "Failed to remove existing directory"
+                fi
+                console_log "Existing directory removed successfully"
+            else
+                console_log "Installation cancelled by user"
+                exit 0
+            fi
+        else
+            # Modalità console
+            read -p "Overwrite existing directory? (y/N): " -n 1 -r
+            echo
+            if [[ $REPLY =~ ^[Yy]$ ]]; then
+                console_log "User confirmed: overwriting existing directory"
+                rm -rf "$install_dir"
+                if [ $? -ne 0 ]; then
+                    error_exit "Failed to remove existing directory"
+                fi
+                console_log "Existing directory removed successfully"
+            else
+                console_log "Installation cancelled by user"
+                exit 0
+            fi
+        fi
+    fi
+}
+
 # Crea cartella in ports di Batocera
-console_log "Creating installation directory..."
+console_log "Checking installation directory..."
 INSTALL_DIR="/userdata/roms/ports/LRscript"
+
+# Gestisci cartella esistente
+handle_existing_directory "$INSTALL_DIR"
+
+console_log "Creating installation directory..."
 mkdir -p "$INSTALL_DIR"
 if [ $? -ne 0 ]; then
     error_exit "Failed to create installation directory"
