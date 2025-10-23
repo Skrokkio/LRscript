@@ -5,25 +5,28 @@ set -e
 # Pulire lo schermo all'inizio
 clear
 
-# Funzione per log con timestamp
-log() {
-    timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    echo "[$timestamp] $1"
+# Funzione per output formattato
+print_message() {
+    echo "[LRscript Install] $1"
 }
 
-# Funzione per messaggi console
-console_log() {
-    message="[LRscript Install] $1"
-    log "$message"
-    echo "$message"
+# Funzione per gestire errori
+error_exit() {
+    echo "[LRscript Install] ERRORE: $1"
+    exit 1
 }
+
+# Banner di intestazione
+echo ""
+echo "========================================"
+echo "    LRscript Installer"
+echo "========================================"
+echo ""
+
+print_message "Avvio installazione LRscript..."
 
 # Funzione per chiedere conferma all'utente
 ask_user_confirmation() {
-    echo ""
-    echo "========================================"
-    echo "    LRscript Installer"
-    echo "========================================"
     echo ""
     echo "Questa installazione sovrascriverà"
     echo "installazione precedente se presente"
@@ -52,58 +55,41 @@ ask_user_confirmation() {
     fi
 }
 
-# Funzione per gestire errori
-error_exit() {
-    error_msg="$1"
-    log "Fatal Error: $error_msg"
-    console_log "Installation error: $error_msg"
-    exit 1
-}
-
-console_log "=== LRscript Retro Game Manager Installer ==="
-
 # Chiedere conferma all'utente prima di procedere
 if ! ask_user_confirmation; then
-
     echo "Installazione annullata dall'utente."
     exit 0
 fi
 
-console_log "Confermato, avvio installazione..."
-
-# Controlla se Python è installato
-# if ! command -v python &> /dev/null; then
-#     console_log "Errore: Python non trovato!"
-#     error_exit "Python not found"
-# fi
+print_message "Confermato, avvio installazione..."
 
 # Crea cartella in ports di Batocera
-console_log "Creazione cartella di installazione..."
+print_message "Creazione cartella di installazione..."
 INSTALL_DIR="/userdata/roms/ports/LRscript"
 
 # Rimuovi installazione precedente se presente
 if [ -d "$INSTALL_DIR" ]; then
-    console_log "Rimozione installazione precedente..."
+    print_message "Rimozione installazione precedente..."
     rm -rf "$INSTALL_DIR"
 fi
 
 mkdir -p "$INSTALL_DIR"
 if [ $? -ne 0 ]; then
-    error_exit "Failed to create installation directory"
+    error_exit "Impossibile creare la directory di installazione"
 fi
 cd "$INSTALL_DIR"
 
 # Scarica repository
-console_log "Scaricamento LRscript da GitHub..."
+print_message "Scaricamento LRscript da GitHub..."
 wget -O LRscript.zip https://github.com/Skrokkio/LRscript/archive/main.zip
 if [ $? -ne 0 ]; then
-    error_exit "Failed to download LRscript"
+    error_exit "Impossibile scaricare LRscript"
 fi
 
-console_log "Estrazione LRscript..."
+print_message "Estrazione LRscript..."
 unzip LRscript.zip
 if [ $? -ne 0 ]; then
-    error_exit "Failed to extract LRscript"
+    error_exit "Impossibile estrarre LRscript"
 fi
 
 mv LRscript-main/* .
@@ -111,20 +97,17 @@ mv LRscript-main/.* . 2>/dev/null || true
 rm -rf LRscript-main LRscript.zip 
 
 # Dipendenze già presenti su Batocera
-console_log "Dipendenze già presenti su Batocera (pygame, requests)"
+print_message "Dipendenze già presenti su Batocera (pygame, requests)"
 
 # Rendi eseguibile lo script principale
-console_log "Rendi eseguibile lo script principale..."
+print_message "Rendi eseguibile lo script principale..."
 chmod +x LRscript.sh
 if [ $? -ne 0 ]; then
-    error_exit "Failed to make script executable"
+    error_exit "Impossibile rendere eseguibile lo script principale"
 fi
 
 # Finalizzazione
-console_log "✅ Installazione completata!"
-console_log "LRscript installed in: /userdata/roms/ports/LRscript"
-console_log "To start: /userdata/roms/ports/LRscript/LRscript.sh"
-console_log "Or from Batocera Ports menu"
+print_message "✅ Installazione completata!"
 
 echo ""
 echo "========================================"
@@ -136,6 +119,7 @@ echo "Percorso: /userdata/roms/ports/LRscript"
 echo "Per avviare: /userdata/roms/ports/LRscript/LRscript.sh"
 echo "Oppure dal menu Ports di Batocera"
 echo ""
-
+echo "Premi INVIO per uscire..."
+read dummy_var
 
 exit 0
