@@ -136,7 +136,6 @@ echo "Percorso: /userdata/roms/ports/LRscript"
 echo "Per avviare: /userdata/roms/ports/LRscript/LRscript.sh"
 echo "Oppure dal menu Ports di Batocera"
 echo ""
-echo "Premi INVIO per uscire..."
-read dummy_var
+
 
 exit 0
