@@ -1,4 +1,4 @@
-#!/bin/bash
+fix#!/bin/bash
 # LRscript Installer Avanzato con Interfaccia Grafica
 set -e
 
@@ -62,41 +62,30 @@ console_log "=== LRscript Retro Game Manager Installer ==="
 #     error_exit "Python not found"
 # fi
 
-# Funzione per gestire cartella esistente
-handle_existing_directory() {
-    local install_dir="$1"
-    
-    if [ -d "$install_dir" ]; then
-        console_log "⚠️  Directory already exists: $install_dir"
-        console_log "Waiting for user response..."
-        
-        # Pausa per dare tempo all'utente di leggere
-        sleep 2
-        
-        # Input semplice da tastiera
-        console_log "Do you want to overwrite it? (y/N) - waiting 30 seconds..."
-        read -t 30 -p "Overwrite existing directory? (y/N): " -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            console_log "User confirmed: overwriting existing directory"
-            rm -rf "$install_dir"
-            if [ $? -ne 0 ]; then
-                error_exit "Failed to remove existing directory"
-            fi
-            console_log "Existing directory removed successfully"
-        else
-            console_log "Installation cancelled by user (timeout or no response)"
-            exit 0
-        fi
-    fi
-}
-
 # Crea cartella in ports di Batocera
 console_log "Checking installation directory..."
 INSTALL_DIR="/userdata/roms/ports/LRscript"
 
-# Gestisci cartella esistente
-handle_existing_directory "$INSTALL_DIR"
+# Controlla se la cartella esiste già
+if [ -d "$INSTALL_DIR" ]; then
+    console_log "Directory $INSTALL_DIR already exists!"
+    echo ""
+    echo "La cartella di destinazione esiste già: $INSTALL_DIR"
+    echo "Vuoi sovrascriverla? (s/n): "
+    read -r response
+    
+    if [[ "$response" =~ ^[Ss]$ ]]; then
+        console_log "Rimuovendo cartella esistente..."
+        rm -rf "$INSTALL_DIR"
+        if [ $? -ne 0 ]; then
+            error_exit "Failed to remove existing directory"
+        fi
+        console_log "Cartella rimossa con successo"
+    else
+        console_log "Installazione annullata dall'utente"
+        error_exit "Installation cancelled by user"
+    fi
+fi
 
 console_log "Creating installation directory..."
 mkdir -p "$INSTALL_DIR"
