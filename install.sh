@@ -28,18 +28,27 @@ ask_user_confirmation() {
     echo "Questa installazione sovrascriverà"
     echo "installazione precedente se presente"
     echo ""
-    echo -n "Premi Y per continuare o N per uscire dal programma: "
-    read user_choice
-    # Prendi solo il primo carattere
-    user_choice=$(echo "$user_choice" | cut -c1)
-    echo ""
     
-    # Converti in maiuscolo e controlla la risposta
-    user_choice=$(echo "$user_choice" | tr '[:lower:]' '[:upper:]')
-    if [ "$user_choice" = "Y" ] || [ "$user_choice" = "YES" ]; then
-        return 0  # Confermato
+    # Controlla se siamo in un terminale interattivo
+    if [ -t 0 ]; then
+        # Terminale interattivo - chiedi conferma
+        echo -n "Premi Y per continuare o N per uscire dal programma: "
+        read user_choice
+        # Prendi solo il primo carattere
+        user_choice=$(echo "$user_choice" | cut -c1)
+        echo ""
+        
+        # Converti in maiuscolo e controlla la risposta
+        user_choice=$(echo "$user_choice" | tr '[:lower:]' '[:upper:]')
+        if [ "$user_choice" = "Y" ] || [ "$user_choice" = "YES" ]; then
+            return 0  # Confermato
+        else
+            return 1  # Annullato
+        fi
     else
-        return 1  # Annullato
+        # Non in un terminale interattivo (curl | sh) - procedi automaticamente
+        echo "Modalità non interattiva rilevata. Procedendo con l'installazione..."
+        return 0
     fi
 }
 
@@ -55,12 +64,12 @@ console_log "=== LRscript Retro Game Manager Installer ==="
 
 # Chiedere conferma all'utente prima di procedere
 if ! ask_user_confirmation; then
-    console_log "Installation cancelled by user"
+
     echo "Installazione annullata dall'utente."
     exit 0
 fi
 
-console_log "User confirmed installation, proceeding..."
+console_log "Confermato, avvio installazione..."
 
 # Controlla se Python è installato
 # if ! command -v python &> /dev/null; then
@@ -69,12 +78,12 @@ console_log "User confirmed installation, proceeding..."
 # fi
 
 # Crea cartella in ports di Batocera
-console_log "Creating installation directory..."
+console_log "Creazione cartella di installazione..."
 INSTALL_DIR="/userdata/roms/ports/LRscript"
 
 # Rimuovi installazione precedente se presente
 if [ -d "$INSTALL_DIR" ]; then
-    console_log "Removing previous installation..."
+    console_log "Rimozione installazione precedente..."
     rm -rf "$INSTALL_DIR"
 fi
 
@@ -85,13 +94,13 @@ fi
 cd "$INSTALL_DIR"
 
 # Scarica repository
-console_log "Downloading LRscript from GitHub..."
+console_log "Scaricamento LRscript da GitHub..."
 wget -O LRscript.zip https://github.com/Skrokkio/LRscript/archive/main.zip
 if [ $? -ne 0 ]; then
     error_exit "Failed to download LRscript"
 fi
 
-console_log "Extracting LRscript..."
+console_log "Estrazione LRscript..."
 unzip LRscript.zip
 if [ $? -ne 0 ]; then
     error_exit "Failed to extract LRscript"
@@ -102,17 +111,17 @@ mv LRscript-main/.* . 2>/dev/null || true
 rm -rf LRscript-main LRscript.zip 
 
 # Dipendenze già presenti su Batocera
-console_log "Dependencies already available on Batocera (pygame, requests)"
+console_log "Dipendenze già presenti su Batocera (pygame, requests)"
 
 # Rendi eseguibile lo script principale
-console_log "Making script executable..."
+console_log "Rendi eseguibile lo script principale..."
 chmod +x LRscript.sh
 if [ $? -ne 0 ]; then
     error_exit "Failed to make script executable"
 fi
 
 # Finalizzazione
-console_log "✅ Installation completed!"
+console_log "✅ Installazione completata!"
 console_log "LRscript installed in: /userdata/roms/ports/LRscript"
 console_log "To start: /userdata/roms/ports/LRscript/LRscript.sh"
 console_log "Or from Batocera Ports menu"
