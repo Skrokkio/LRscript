@@ -10,11 +10,11 @@ sistemi Batocera.
 Avevo necessità di avere uno script simile per Batocera ma che "pescasse" rom da Archive.
 
 ## Cosa fà questo script 
-All' avvio carica il file platforms.xml e per ogni voce <platform> crea un pulsante nella app.
+All' avvio carica il file platforms.xml e per ogni voce "<platform>" crea un pulsante nella app.
 premendo il pulsante si carica il rispettivo Dat, e crea una lista di Roms col nome ufficiale.
-Scegliendo un gioco nella lista, il programma cerca le informazioni utilizzando il nome della Rom ufficiale su internet usando il percorso  <info>, e i media dal percorso dato in <ingame>  e  <title>
+Scegliendo un gioco nella lista, il programma cerca le informazioni utilizzando il nome della Rom ufficiale su internet usando il percorso  "<info>", e i media dal percorso dato in "<ingame>"  e  "<title>"
 
-Infine premendo da tastiera Space oppure il relatico Button3 mappato col Joystick e' possibile scaricare la Rom nel percorso <roms_path>
+Infine premendo da tastiera Space oppure il relatico Button3 mappato col Joystick e' possibile scaricare la Rom nel percorso "<roms_path>"
 
 
 
@@ -39,10 +39,10 @@ curl -L "https://raw.githubusercontent.com/Skrokkio/LRscript/refs/heads/main/ins
 
 ## 🎮 Piattaforme Supportate
 
-- **MAME 2010** (romset 0.139)
-- **FBNeo 1.0.0.03**
+- **MAME** 
+- **FBNeo**
 - possibilità di aggiungere altre piattaforme editando file xml, il programma salva le Rom 
-  nella cartella   <roms_path> specificata nel file platforms.xml. Attenzione se non esiste la crea! 
+  nella cartella   "<roms_path>" specificata nel file platforms.xml. Attenzione se non esiste la crea! 
 
   
 ## 🛠️ Requisiti di Sistema
