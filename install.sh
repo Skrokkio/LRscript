@@ -13,7 +13,7 @@ error_exit() {
 
 # Banner di intestazione
 echo ""
-echo "========================================"
+echo "============================================="
 echo "    LRscript - Retro Game Manager - Installer"
 echo "========================================"
 echo ""
@@ -58,13 +58,11 @@ fi
 
 echo "Confermato, avvio installazione..."
 sleep 1 # Attesa di 1 secondo
-echo ""
 
 # Crea cartella in ports di Batocera
 echo "Creazione cartella di installazione..."
 INSTALL_DIR="/userdata/roms/ports/LRscript"
 sleep 1 # Attesa di 1 secondo
-echo ""
 
 # Rimuovi installazione precedente se presente
 if [ -d "$INSTALL_DIR" ]; then
@@ -117,15 +115,8 @@ echo ""
 # Finalizzazione
 echo "✅ Installazione completata!"
 
-echo ""
-echo "========================================"
-echo "    Installazione Completata!"
-echo "========================================"
-echo ""
-echo "LRscript è stato installato con successo!"
 echo "Percorso: /userdata/roms/ports/LRscript"
-echo "Per avviare: /userdata/roms/ports/LRscript/LRscript.sh"
-echo "Oppure dal menu Ports di Batocera"
+echo "Avvia LRscript dal menu Ports di Batocera"
 echo ""
 
 
