@@ -34,7 +34,7 @@ curl -L "https://raw.githubusercontent.com/Skrokkio/LRscript/refs/heads/main/ins
 - **🎮 Multi-Piattaforma**: Supporta MAME, FBNeo, MAME 2003-Plus etc 
 - **🖼️ Scraping Automatico**: Scarica immagini e informazioni dai siti specializzati
 - **💾 Cache Locale**: Sistema di cache per immagini e dati
-- **🎨 Interfaccia Moderna**: UI responsive con Pygame
+- **🎨 Interfaccia Grafica**: UI responsive con Pygame
 - **📱 Controlli Joystick**: Supporto completo per gamepad e joystick arcade
 
 ## 🎮 Piattaforme Supportate
@@ -97,8 +97,64 @@ Questo progetto è distribuito sotto licenza MIT. Vedi il file `LICENSE` per mag
 - [ ] Supporto per più piattaforme
 - [ ] modifiche e miglioramenti vari futuri
 
----
+## Struttura attuale Work in progress
 
-**Sviluppato con ❤️ per la community retro gaming**
+LRscript/
+├── 📄 __main__.py                    # File principale dell'applicazione
+├── 📄 platforms.xml                 # Configurazione piattaforme
+├── 📄 joystick_mapping.json         # Mappatura pulsanti joystick
+├── 📄 LRscript.sh                   # Script di avvio
+├── 📄 install.sh                    # Script di installazione
+├── 📄 README.md                     # Documentazione
+│
+├── 📁 code/                         # Codice sorgente modulare
+│   ├── 📄 __init__.py
+│   ├── 📄 arcade_ui.py              # Interfaccia arcade principale
+│   ├── 📄 config_ui.py              # Interfaccia configurazione joystick
+│   ├── 📄 constants.py              # Costanti e configurazioni
+│   ├── 📄 game_scraper.py           # Scraper per informazioni giochi
+│   ├── 📄 joystick_manager.py       # Gestore joystick
+│   ├── 📄 platform_manager.py      # Gestore piattaforme
+│   └── 📄 platform_menu.py          # Menu selezione piattaforme
+│
+├── 📁 resources/                    # Risorse grafiche e audio
+│   ├── 📄 LRscript.png             # Logo applicazione
+│   ├── 📄 sfondo_arcade.jpg        # Sfondo principale
+│   │
+│   ├── 📁 fonts/                   # Font personalizzati
+│   │   ├── 📄 Free.ttf
+│   │   ├── 📄 Mario.ttf
+│   │   ├── 📄 Pixel-UniCode.ttf
+│   │   └── 📄 zelek.ttf
+│   │
+│   ├── 📁 icons/                   # Icone pulsanti footer
+│   │   ├── 📄 button_1.png
+│   │   ├── 📄 button_2.png
+│   │   ├── 📄 button_3.png
+│   │   ├── 📄 button_lr.png
+│   │   ├── 📄 button_start.png
+│   │   └── 📄 system.png           # Icona configurazione
+│   │
+│   └── 📁 logos/                   # Loghi piattaforme
+│       ├── 📄 arcade.png
+│       ├── 📄 fbneo.png
+│       ├── 📄 mame-libretro.png
+│       ├── 📄 mame.png
+│       ├── 📄 mame2003plus.png
+│       └── 📄 mario.png
+│
+├── 📁 cache/                       # Cache immagini giochi
+│   ├── 📁 FBNeo/
+│   └── 📁 etc ...
+│
+├── 📁 dats/                        # File DAT per ROM
+│   ├── 📄 FBNeo1.0.0.03.dat
+│   ├── 📄 MAME0.139u4.dat
+│   ├── 📄 etc ..
+│
+└── 📁 log/                         # File di log
+    └── 📄 log.txt
+
+**Sviluppato con ❤️ per il retro gaming**
 
 *LRscript - by Skrokkio 2025* 🎮
