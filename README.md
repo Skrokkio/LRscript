@@ -1,7 +1,7 @@
 # LRscript - Retro Game Manager
 
 
-Attenzione Readme preliminare .  work in progress
+Attenzione Readme preliminare . work in progress
 
 🎮 **Gestore di giochi retro con interfaccia arcade ottimizzata per cabinet**
 
