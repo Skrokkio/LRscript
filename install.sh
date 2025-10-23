@@ -1,128 +1,25 @@
 #!/bin/bash
-# LRscript Installer Avanzato con Interfaccia Grafica
+# LRscript Installer Semplice
 set -e
 
-# Variabili per l'interfaccia grafica
-XTERM="/usr/bin/xterm"
-TEXT_SIZE="72"
-TEXT_COLOR="green"
-DISPLAY_LOG="/tmp/lrscript_install_display.log"
+# Pulire lo schermo all'inizio
+clear
 
 # Funzione per log con timestamp
 log() {
     local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
-    echo "[$timestamp] $1" >> "$DISPLAY_LOG" 2>&1
+    echo "[$timestamp] $1"
 }
 
-# Funzione per messaggi console e xterm
+# Funzione per messaggi console
 console_log() {
     local message="[LRscript Install] $1"
     log "$message"
     echo "$message"
-    if [ -x "$XTERM" ]; then
-        echo "$message" >> "$DISPLAY_LOG"
-    fi
 }
 
 # Funzione per chiedere conferma all'utente
 ask_user_confirmation() {
-    local response
-    
-    # Prova prima con dialog se disponibile
-    if command -v dialog >/dev/null 2>&1; then
-        dialog --title "LRscript Installer" \
-               --yesno "Questa installazione sovrascriverà installazione precedente se presente.\n\nVuoi continuare?" \
-               10 60
-        return $?
-    fi
-    
-    # Fallback: usa xterm con un approccio più semplice
-    if [ -x "$XTERM" ]; then
-        # Crea uno script temporaneo per gestire l'input
-        local temp_script="/tmp/lrscript_confirm.sh"
-        cat > "$temp_script" << 'EOF'
-#!/bin/bash
-echo '========================================'
-echo '    LRscript Installer'
-echo '========================================'
-echo ''
-echo 'Questa installazione sovrascriverà'
-echo 'installazione precedente se presente'
-echo ''
-echo 'Premi Y per continuare o N per uscire'
-echo 'dal programma'
-echo ''
-echo '========================================'
-echo -n 'La tua scelta (Y/N): '
-read -n 1 response
-echo
-echo "Hai scelto: $response"
-echo "$response" > /tmp/lrscript_response.txt
-EOF
-        chmod +x "$temp_script"
-        
-        # Esegui lo script in xterm
-        LC_ALL=C $XTERM -fullscreen -fg yellow -bg black -fs $TEXT_SIZE -e "$temp_script"
-        
-        # Leggi la risposta
-        if [ -f "/tmp/lrscript_response.txt" ]; then
-            response=$(cat "/tmp/lrscript_response.txt" 2>/dev/null)
-            rm -f "/tmp/lrscript_response.txt"
-        else
-            response=""
-        fi
-        
-        # Pulisci lo script temporaneo
-        rm -f "$temp_script"
-    else
-        # Fallback per console normale
-        echo "========================================"
-        echo "    LRscript Installer"
-        echo "========================================"
-        echo ""
-        echo "Questa installazione sovrascriverà"
-        echo "installazione precedente se presente"
-        echo ""
-        echo -n "Premi Y per continuare o N per uscire dal programma: "
-        read -n 1 response
-        echo
-    fi
-    
-    # Converti in maiuscolo e controlla la risposta
-    response=$(echo "$response" | tr '[:lower:]' '[:upper:]')
-    if [ "$response" = "Y" ] || [ "$response" = "YES" ]; then
-        return 0  # Confermato
-    else
-        return 1  # Annullato
-    fi
-}
-
-# Funzione per gestire errori
-error_exit() {
-    local error_msg="$1"
-    log "Fatal Error: $error_msg"
-    console_log "Installation error: $error_msg"
-    console_log "Read $DISPLAY_LOG for details"
-    if [ -x "$XTERM" ]; then
-        LC_ALL=C $XTERM -fullscreen -fg red -bg black -fs $TEXT_SIZE -e "cat $DISPLAY_LOG; echo 'Press a key to exit...'; read -n 1; exit"
-        rm -f "$DISPLAY_LOG"
-    fi
-    exit 1
-}
-
-# Configurare l'ambiente grafico per xterm
-export DISPLAY=:0.0
-export LC_ALL=C
-
-# Inizializzare il log di display
-echo "[LRscript Install] Starting LRscript Installation..." > "$DISPLAY_LOG"
-
-# Chiedere conferma all'utente prima di procedere
-console_log "Asking user confirmation..."
-
-# Se xterm non è disponibile, usa un approccio più semplice
-if [ ! -x "$XTERM" ]; then
-    console_log "xterm not available, using simple console confirmation"
     echo ""
     echo "========================================"
     echo "    LRscript Installer"
@@ -135,46 +32,33 @@ if [ ! -x "$XTERM" ]; then
     read -n 1 user_choice
     echo ""
     
+    # Converti in maiuscolo e controlla la risposta
     user_choice=$(echo "$user_choice" | tr '[:lower:]' '[:upper:]')
-    if [ "$user_choice" != "Y" ] && [ "$user_choice" != "YES" ]; then
-        console_log "Installation cancelled by user"
-        echo "Installazione annullata dall'utente."
-        exit 0
+    if [ "$user_choice" = "Y" ] || [ "$user_choice" = "YES" ]; then
+        return 0  # Confermato
+    else
+        return 1  # Annullato
     fi
-    console_log "User confirmed installation, proceeding..."
-else
-    # Usa la funzione ask_user_confirmation solo se xterm è disponibile
-    if ! ask_user_confirmation; then
-        console_log "Installation cancelled by user"
-        if [ -x "$XTERM" ]; then
-            LC_ALL=C $XTERM -fullscreen -fg red -bg black -fs $TEXT_SIZE -e "
-                echo '========================================'
-                echo '    Installazione Annullata'
-                echo '========================================'
-                echo ''
-                echo 'L''installazione è stata annullata'
-                echo 'dall''utente.'
-                echo ''
-                echo 'Premi un tasto per uscire...'
-                read -n 1
-            "
-        fi
-        exit 0
-    fi
-    console_log "User confirmed installation, proceeding..."
-fi
+}
 
-# Avviare xterm in background per mostrare il progresso
-if [ -x "$XTERM" ]; then
-    LC_ALL=C $XTERM -fullscreen -fg $TEXT_COLOR -bg black -fs $TEXT_SIZE -e "tail -f $DISPLAY_LOG" &
-    XTERM_PID=$!
-    sleep 1
-    console_log "Graphical interface started"
-else
-    console_log "xterm not available, using console mode only"
-fi
+# Funzione per gestire errori
+error_exit() {
+    local error_msg="$1"
+    log "Fatal Error: $error_msg"
+    console_log "Installation error: $error_msg"
+    exit 1
+}
 
 console_log "=== LRscript Retro Game Manager Installer ==="
+
+# Chiedere conferma all'utente prima di procedere
+if ! ask_user_confirmation; then
+    console_log "Installation cancelled by user"
+    echo "Installazione annullata dall'utente."
+    exit 0
+fi
+
+console_log "User confirmed installation, proceeding..."
 
 # Controlla se Python è installato
 # if ! command -v python &> /dev/null; then
@@ -231,11 +115,17 @@ console_log "LRscript installed in: /userdata/roms/ports/LRscript"
 console_log "To start: /userdata/roms/ports/LRscript/LRscript.sh"
 console_log "Or from Batocera Ports menu"
 
-# Mostrare la finalizzazione in xterm
-if [ -x "$XTERM" ]; then
-    kill $XTERM_PID 2>/dev/null
-    LC_ALL=C $XTERM -fullscreen -fg $TEXT_COLOR -bg black -fs $TEXT_SIZE -e "cat $DISPLAY_LOG; echo 'Installation completed. Press a key to exit...'; read -n 1; exit"
-    rm -f "$DISPLAY_LOG"
-fi
+echo ""
+echo "========================================"
+echo "    Installazione Completata!"
+echo "========================================"
+echo ""
+echo "LRscript è stato installato con successo!"
+echo "Percorso: /userdata/roms/ports/LRscript"
+echo "Per avviare: /userdata/roms/ports/LRscript/LRscript.sh"
+echo "Oppure dal menu Ports di Batocera"
+echo ""
+echo "Premi un tasto per uscire..."
+read -n 1
 
 exit 0
