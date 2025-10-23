@@ -31,7 +31,8 @@ ask_user_confirmation() {
     echo "Questa installazione sovrascriverà"
     echo "installazione precedente se presente"
     echo ""
-    
+    sleep 2 # Attesa di 2 secondi
+    echo ""
     # Controlla se siamo in un terminale interattivo
     if [ -t 0 ]; then
         # Terminale interattivo - chiedi conferma
@@ -62,17 +63,21 @@ if ! ask_user_confirmation; then
 fi
 
 print_message "Confermato, avvio installazione..."
+sleep 1 # Attesa di 1 secondo
+echo ""
 
 # Crea cartella in ports di Batocera
 print_message "Creazione cartella di installazione..."
 INSTALL_DIR="/userdata/roms/ports/LRscript"
-
+sleep 1 # Attesa di 1 secondo
+echo ""
 # Rimuovi installazione precedente se presente
 if [ -d "$INSTALL_DIR" ]; then
     print_message "Rimozione installazione precedente..."
     rm -rf "$INSTALL_DIR"
 fi
-
+sleep 1 # Attesa di 1 secondo
+echo "" 
 mkdir -p "$INSTALL_DIR"
 if [ $? -ne 0 ]; then
     error_exit "Impossibile creare la directory di installazione"
@@ -80,6 +85,8 @@ fi
 cd "$INSTALL_DIR"
 
 # Scarica repository
+sleep 1 # Attesa di 1 secondo
+echo ""
 print_message "Scaricamento LRscript da GitHub..."
 wget -O LRscript.zip https://github.com/Skrokkio/LRscript/archive/main.zip
 if [ $? -ne 0 ]; then
@@ -98,14 +105,16 @@ rm -rf LRscript-main LRscript.zip
 
 # Dipendenze già presenti su Batocera
 print_message "Dipendenze già presenti su Batocera (pygame, requests)"
-
+sleep 1 # Attesa di 1 secondo
+echo ""
 # Rendi eseguibile lo script principale
 print_message "Rendi eseguibile lo script principale..."
 chmod +x LRscript.sh
 if [ $? -ne 0 ]; then
     error_exit "Impossibile rendere eseguibile lo script principale"
 fi
-
+sleep 1 # Attesa di 1 secondo
+echo "" 
 # Finalizzazione
 print_message "✅ Installazione completata!"
 
