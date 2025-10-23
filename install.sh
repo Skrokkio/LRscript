@@ -27,9 +27,11 @@ console_log() {
 # Funzione per chiedere conferma all'utente
 ask_user_confirmation() {
     local response
+    local temp_file="/tmp/lrscript_user_response"
+    
     if [ -x "$XTERM" ]; then
-        # Usa xterm per chiedere conferma
-        response=$(LC_ALL=C $XTERM -fullscreen -fg yellow -bg black -fs $TEXT_SIZE -e "
+        # Usa xterm per chiedere conferma e salva la risposta in un file temporaneo
+        LC_ALL=C $XTERM -fullscreen -fg yellow -bg black -fs $TEXT_SIZE -e "
             echo '========================================'
             echo '    LRscript Installer'
             echo '========================================'
@@ -45,8 +47,17 @@ ask_user_confirmation() {
             read -n 1 response
             echo
             echo \"Hai scelto: \$response\"
-            echo \"\$response\"
-        " 2>/dev/null)
+            echo \"\$response\" > $temp_file
+            sleep 1
+        "
+        
+        # Leggi la risposta dal file temporaneo
+        if [ -f "$temp_file" ]; then
+            response=$(cat "$temp_file" 2>/dev/null)
+            rm -f "$temp_file"
+        else
+            response=""
+        fi
     else
         # Fallback per console normale
         echo "========================================"
