@@ -69,10 +69,56 @@ INSTALL_DIR="/userdata/roms/ports/LRscript"
 # Controlla se la cartella esiste già
 if [ -d "$INSTALL_DIR" ]; then
     console_log "Directory $INSTALL_DIR already exists!"
-    echo ""
-    echo "La cartella di destinazione esiste già: $INSTALL_DIR"
-    echo "Vuoi sovrascriverla? (s/n): "
-    read -r response
+    
+    # Se xterm è attivo, chiudilo temporaneamente per il prompt interattivo
+    if [ -n "$XTERM_PID" ] && kill -0 "$XTERM_PID" 2>/dev/null; then
+        console_log "Preparing interactive prompt..."
+        kill "$XTERM_PID" 2>/dev/null
+        sleep 1
+    fi
+    
+    # Mostra il prompt interattivo in xterm
+    if [ -x "$XTERM" ]; then
+        RESPONSE_FILE="/tmp/lrscript_response.txt"
+        echo "" > "$RESPONSE_FILE"
+        
+        LC_ALL=C $XTERM -fullscreen -fg yellow -bg black -fs $TEXT_SIZE -e "
+            echo '=========================================='
+            echo 'LRscript Installation'
+            echo '=========================================='
+            echo ''
+            echo 'La cartella di destinazione esiste già:'
+            echo '$INSTALL_DIR'
+            echo ''
+            echo 'Vuoi sovrascriverla? (s/n): '
+            read -r response
+            echo \"\$response\" > '$RESPONSE_FILE'
+            echo ''
+            echo 'Risposta: '\$response
+            echo 'Premi un tasto per continuare...'
+            read -n 1
+        " &
+        
+        # Aspetta che l'utente risponda
+        while [ ! -s "$RESPONSE_FILE" ]; do
+            sleep 0.5
+        done
+        
+        response=$(cat "$RESPONSE_FILE" 2>/dev/null | tr -d '\n\r')
+        rm -f "$RESPONSE_FILE"
+        
+        # Riapri xterm per continuare l'installazione
+        console_log "Restarting xterm interface..."
+        LC_ALL=C $XTERM -fullscreen -fg $TEXT_COLOR -bg black -fs $TEXT_SIZE -e "tail -f $DISPLAY_LOG" &
+        XTERM_PID=$!
+        sleep 1
+    else
+        # Fallback per console normale
+        echo ""
+        echo "La cartella di destinazione esiste già: $INSTALL_DIR"
+        echo "Vuoi sovrascriverla? (s/n): "
+        read -r response
+    fi
     
     if [[ "$response" =~ ^[Ss]$ ]]; then
         console_log "Rimuovendo cartella esistente..."
