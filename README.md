@@ -99,6 +99,7 @@ Questo progetto è distribuito sotto licenza MIT. Vedi il file `LICENSE` per mag
 
 ## Struttura attuale Work in progress
 
+```text
 LRscript/
 ├── 📄 __main__.py                    # File principale dell'applicazione
 ├── 📄 platforms.xml                 # Configurazione piattaforme
@@ -154,6 +155,7 @@ LRscript/
 │
 └── 📁 log/                         # File di log
     └── 📄 log.txt
+```
 
 **Sviluppato con ❤️ per il retro gaming**
 
