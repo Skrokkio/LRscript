@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # LRscript Installer Semplice
 set -e
 
@@ -7,13 +7,13 @@ clear
 
 # Funzione per log con timestamp
 log() {
-    local timestamp=$(date '+%Y-%m-%d %H:%M:%S')
+    timestamp=$(date '+%Y-%m-%d %H:%M:%S')
     echo "[$timestamp] $1"
 }
 
 # Funzione per messaggi console
 console_log() {
-    local message="[LRscript Install] $1"
+    message="[LRscript Install] $1"
     log "$message"
     echo "$message"
 }
@@ -28,8 +28,10 @@ ask_user_confirmation() {
     echo "Questa installazione sovrascriverà"
     echo "installazione precedente se presente"
     echo ""
-    read -r -p "Premi Y per continuare o N per uscire dal programma: " user_choice
-    user_choice=${user_choice:0:1}
+    echo -n "Premi Y per continuare o N per uscire dal programma: "
+    read user_choice
+    # Prendi solo il primo carattere
+    user_choice=$(echo "$user_choice" | cut -c1)
     echo ""
     
     # Converti in maiuscolo e controlla la risposta
@@ -43,7 +45,7 @@ ask_user_confirmation() {
 
 # Funzione per gestire errori
 error_exit() {
-    local error_msg="$1"
+    error_msg="$1"
     log "Fatal Error: $error_msg"
     console_log "Installation error: $error_msg"
     exit 1
