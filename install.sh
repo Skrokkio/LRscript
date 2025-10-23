@@ -18,6 +18,7 @@ cd "$INSTALL_DIR"
 # Scarica repository
 echo "Scaricamento LRscript..."
 wget -O LRscript.zip https://github.com/Skrokkio/LRscript/archive/main.zip
+echo "Estraggo  LRscript..."
 unzip LRscript.zip
 mv LRscript-main/* .
 mv LRscript-main/.* . 2>/dev/null || true
