@@ -1,0 +1,34 @@
+2025-10-23 17:44:41,509 - INFO - === LRscript - Retro Game Manager ===
+2025-10-23 17:44:41,509 - INFO - Avvio applicazione: 2025-10-23 17:44:41
+2025-10-23 17:44:41,790 - INFO - Modalità risoluzione: 1280x1024 forzata
+2025-10-23 17:44:41,790 - INFO - Risoluzione finale: 1280x1024
+2025-10-23 17:44:41,790 - INFO - Font scalati per 1280x1024 (fattore: 1.6): L=34, M=25, S=19, T=14
+2025-10-23 17:44:41,790 - WARNING - Font personalizzato non trovato: ./resources/fonts/None, uso font di sistema
+2025-10-23 17:44:42,460 - INFO - Avviato in modalità fullscreen: 1280x1024
+2025-10-23 17:44:42,460 - INFO - Premi F11 per passare a modalità finestra
+2025-10-23 17:44:42,461 - WARNING - Errore parsing XML: not well-formed (invalid token): line 9, column 52, provo a correggere automaticamente
+2025-10-23 17:44:42,461 - INFO - Versione programma: 0.1.4
+2025-10-23 17:44:42,461 - INFO - Caricate 3 piattaforme dal file XML
+2025-10-23 17:44:42,462 - INFO - Logo caricato: ./resources/LRscript.png -> 133x100
+2025-10-23 17:44:42,462 - INFO - Icona configurazione caricata: ./resources/icons/system.png -> 42x42
+2025-10-23 17:44:42,463 - INFO - Caricate 5 icone PNG per il footer del menu
+2025-10-23 17:44:42,472 - INFO - Caricate 6 immagini da ./resources/logos
+2025-10-23 17:44:42,472 - INFO - Configurazione joystick caricata da ./joystick_mapping.json
+2025-10-23 17:44:42,472 - INFO - Configurazione joystick caricata: {'button_1': 2, 'button_2': 1, 'button_3': 0, 'l1': 4, 'r1': 5, 'start': 9, 'select': 8}
+2025-10-23 17:44:42,472 - INFO - Dispositivi di input rilevati: 1
+2025-10-23 17:44:42,527 - INFO - Joystick selezionato: USB gamepad (indice 0)
+2025-10-23 17:44:42,527 - INFO - Player 0 del cabinato sarà utilizzato per i controlli
+2025-10-23 17:44:42,528 - INFO - Caricamento sfondo: ./resources/sfondo_arcade.jpg
+2025-10-23 17:44:42,537 - INFO - Sfondo caricato: 1280x1024
+2025-10-23 17:44:42,538 - INFO - Caricate 5 icone PNG per il footer
+2025-10-23 17:44:42,538 - INFO - LRscript - Retro Game Manager (Pygame)
+2025-10-23 17:44:42,538 - INFO - JOYSTICK RILEVATO: USB gamepad
+2025-10-23 17:44:46,627 - INFO - Piattaforma selezionata: FBNeo1.0.0.03
+2025-10-23 17:44:46,627 - INFO - Percorsi aggiornati per: FBNeo1.0.0.03
+2025-10-23 17:44:46,627 - INFO - Caricamento giochi da XML: ./dats/FBNeo1.0.0.03.dat
+2025-10-23 17:44:46,939 - INFO - Ordinamento alfabetico in corso...
+2025-10-23 17:44:46,941 - INFO - Ordinamento completato
+2025-10-23 17:44:46,967 - INFO - Immagini e informazioni di test caricate
+2025-10-23 17:44:50,073 - INFO - Gioco selezionato: 1942abl - 1942 (Revision A, bootleg)
+2025-10-23 17:44:51,908 - INFO - Gioco selezionato: 1942w - 1942 (Williams Electronics lic...
+2025-10-23 17:45:10,717 - INFO - Torno al menu delle piattaforme

@@ -62,8 +62,14 @@ LinguaArcade = "&lang=it"
 # =============================================================================
 # CONFIGURAZIONE FONT - MODIFICA QUESTI VALORI PER CAMBIARE FONT E DIMENSIONI
 # =============================================================================
-FONT_NAME = "Pixel-UniCode.ttf"  # Nome del font da usare (Mario.ttf, zelek.ttf, Pixel-UniCode.ttf o None per font di sistema)
-FONT_SCALE_FACTOR = 1.4  # Riduce le dimensioni del font (0.5 = metà, 1.0 = normale, 1.5 = più grande)
+FONT_NAME = "None"  # Nome del font da usare (Mario.ttf, zelek.ttf, Pixel-UniCode.ttf o None per font di sistema)
+FONT_SCALE_FACTOR = 1.6 # Riduce le dimensioni del font (0.5 = metà, 1.0 = normale, 1.5 = più grande)
+# =============================================================================
+
+# =============================================================================
+# CONFIGURAZIONE RISOLUZIONE - MODIFICA QUESTO VALORE PER CAMBIARE RISOLUZIONE
+# =============================================================================
+RESOLUTION_MODE = 1 # 1 = 1280x1024 forzata, 2 = auto-rilevamento (default)
 # =============================================================================
 
 # Colori arcade ispirati a RGSX
@@ -87,14 +93,22 @@ FPS = 60
 # Funzione per ottenere la risoluzione del monitor
 def get_screen_resolution():
     """Ottiene la risoluzione del monitor principale"""
-    import pygame
-    pygame.init()
-    info = pygame.display.Info()
-    return info.current_w, info.current_h
+    if RESOLUTION_MODE == 1:
+        # Modalità 1280x1024 forzata
+        logger.info("Modalità risoluzione: 1280x1024 forzata")
+        return 1280, 1024
+    else:
+        # Modalità auto-rilevamento (default)
+        import pygame
+        pygame.init()
+        info = pygame.display.Info()
+        detected_width, detected_height = info.current_w, info.current_h
+        logger.info(f"Modalità risoluzione: auto-rilevamento - {detected_width}x{detected_height}")
+        return detected_width, detected_height
 
 # Ottieni la risoluzione del monitor
 SCREEN_WIDTH, SCREEN_HEIGHT = get_screen_resolution()
-logger.info(f"Risoluzione monitor rilevata: {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
+logger.info(f"Risoluzione finale: {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
 
 # Font scalabili basati sulla risoluzione
 def get_scaled_font_size(base_size, screen_width):
