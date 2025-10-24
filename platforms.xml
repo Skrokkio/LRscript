@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <platforms>
-	<version>0.1.4</version>
+	<version>0.1.5</version>
 	<platform>
 		<name>Mame2010 romset 0.139</name>
 		<cache_path>./cache/mame2010</cache_path>

@@ -69,7 +69,7 @@ FONT_SCALE_FACTOR = 1.6 # Riduce le dimensioni del font (0.5 = metà, 1.0 = norm
 # =============================================================================
 # CONFIGURAZIONE RISOLUZIONE - MODIFICA QUESTO VALORE PER CAMBIARE RISOLUZIONE
 # =============================================================================
-RESOLUTION_MODE = 2 # 1 = 1280x1024 forzata, 2 = auto-rilevamento (default)
+RESOLUTION_MODE = 1 # 1 = 1280x1024 forzata, 2 = auto-rilevamento (default)
 # =============================================================================
 
 # Colori arcade ispirati a RGSX
@@ -272,6 +272,15 @@ class ArcadeUI:
         self.download_info = {}
         self.download_state = None  # None, 'downloading', 'success', 'error'
         self.download_result_message = ""
+        
+        # Progresso download
+        self.download_progress = 0.0  # 0.0 - 1.0
+        self.download_bytes_downloaded = 0
+        self.download_total_bytes = 0
+        self.download_speed = 0  # bytes per secondo
+        self.download_current_url = ""
+        self.download_thread = None  # Thread per download asincrono
+        self.download_failure_reason = ""  # Motivo del fallimento
         
         # Clock per FPS
         self.clock = pygame.time.Clock()
@@ -497,14 +506,15 @@ class ArcadeUI:
                         # entra in modalità cattura per quel pulsante
                         if self.config_ui.selected_index < len(self.config_ui.buttons):
                             selected_button_key = self.config_ui.buttons[self.config_ui.selected_index]
-                            if event.button == config[selected_button_key]:
+                            # Escludi button2 da questo comportamento per evitare conflitti
+                            if event.button == config[selected_button_key] and selected_button_key != 'button_2':
                                 # Entra in modalità cattura per il pulsante selezionato
                                 result = self.config_ui.handle_input('confirm')
                             elif event.button == config['button_1']:
                                 result = self.config_ui.handle_input('confirm')
                             elif event.button == config['button_2']:
-                                result = self.config_ui.handle_input('back')
-                                logger.info(f"Button2 premuto, risultato: {result}")
+                                # Button2 non ha funzione nella schermata di configurazione
+                                result = None
                             elif event.button == config['button_3']:
                                 result = self.config_ui.handle_input('download_rom')
                             elif event.button == config['l1']:
@@ -520,7 +530,8 @@ class ArcadeUI:
                             if event.button == config['button_1']:
                                 result = self.config_ui.handle_input('confirm')
                             elif event.button == config['button_2']:
-                                result = self.config_ui.handle_input('back')
+                                # Button2 non ha funzione nella schermata di configurazione
+                                result = None
                             elif event.button == config['l1']:
                                 result = self.config_ui.handle_input('scroll_up')
                             elif event.button == config['r1']:
@@ -651,6 +662,10 @@ class ArcadeUI:
                 result = self.config_ui.handle_input('up')
             elif event.key == pygame.K_DOWN:
                 result = self.config_ui.handle_input('down')
+            elif event.key == pygame.K_LEFT:
+                result = self.config_ui.handle_input('left')
+            elif event.key == pygame.K_RIGHT:
+                result = self.config_ui.handle_input('right')
             elif event.key == pygame.K_RETURN:
                 # Inizia il tracking del tempo di pressione per la funzione hold
                 self.enter_press_time = time.time()
@@ -677,10 +692,7 @@ class ArcadeUI:
             # Se è in stato di risultato, qualsiasi tasto chiude
             if self.download_state in ['success', 'error']:
                 if event.key in [pygame.K_SPACE, pygame.K_RETURN, pygame.K_ESCAPE]:
-                    self.download_confirmation_active = False
-                    self.download_info = {}
-                    self.download_state = None
-                    self.download_result_message = ""
+                    self._reset_download_state()
                 return
             
             # Se è in downloading, blocca l'input
@@ -796,10 +808,7 @@ class ArcadeUI:
             # Se è in stato di risultato, qualsiasi pulsante chiude
             if self.download_state in ['success', 'error']:
                 if action in ['confirm', 'back']:
-                    self.download_confirmation_active = False
-                    self.download_info = {}
-                    self.download_state = None
-                    self.download_result_message = ""
+                    self._reset_download_state()
                 return
             
             # Se è in downloading, blocca l'input
@@ -1147,10 +1156,7 @@ class ArcadeUI:
             if not self.download_info.get('folder_exists', False):
                 logger.error(f"❌ Download annullato: cartella destinazione non presente")
                 logger.error(f"📁 Cartella richiesta: {self.download_info['roms_path']}")
-                self.download_confirmation_active = False
-                self.download_info = {}
-                self.download_state = None
-                self.download_result_message = ""
+                self._reset_download_state()
                 return
             
             logger.info(f"✅ Download confermato!")
@@ -1161,9 +1167,22 @@ class ArcadeUI:
             for i, url in enumerate(urls):
                 logger.info(f"   {i+1}. {url}")
             
-            # Imposta stato "downloading"
+            # Imposta stato "downloading" e resetta progresso
             self.download_state = 'downloading'
+            self.download_progress = 0.0
+            self.download_bytes_downloaded = 0
+            self.download_total_bytes = 0
+            self.download_speed = 0
+            self.download_current_url = ""
             
+            # Avvia il download in un thread separato
+            self.download_thread = threading.Thread(target=self._download_worker)
+            self.download_thread.daemon = True
+            self.download_thread.start()
+    
+    def _download_worker(self):
+        """Worker thread per il download asincrono"""
+        try:
             # Avvia il download effettivo
             success = self.download_rom_file()
             
@@ -1171,22 +1190,39 @@ class ArcadeUI:
             if success:
                 self.download_state = 'success'
                 self.download_result_message = f"Download completato: {self.download_info['rom_name']}.zip"
+                self.download_failure_reason = ""
                 logger.info(f"🎉 Download completato con successo!")
             else:
                 self.download_state = 'error'
                 self.download_result_message = "Download fallito. Controlla il log per i dettagli."
+                self.download_failure_reason = "Tutti gli URL hanno fallito"
                 logger.error(f"💥 Download fallito!")
-            
-            # NON chiudere il modal qui - rimane aperto per mostrare il risultato
+        except Exception as e:
+            logger.error(f"💥 Errore durante il download: {e}")
+            self.download_state = 'error'
+            self.download_result_message = f"Errore durante il download: {str(e)}"
+            self.download_failure_reason = str(e)
     
     def cancel_download(self):
         """Annulla il download della ROM"""
         if self.download_confirmation_active:
             logger.info("❌ Download annullato")
-            self.download_confirmation_active = False
-            self.download_info = {}
-            self.download_state = None
-            self.download_result_message = ""
+            self._reset_download_state()
+            # Il thread si chiuderà automaticamente quando il download termina
+    
+    def _reset_download_state(self):
+        """Resetta lo stato del download"""
+        self.download_confirmation_active = False
+        self.download_info = {}
+        self.download_state = None
+        self.download_result_message = ""
+        self.download_progress = 0.0
+        self.download_bytes_downloaded = 0
+        self.download_total_bytes = 0
+        self.download_speed = 0
+        self.download_current_url = ""
+        self.download_thread = None
+        self.download_failure_reason = ""
     
     def download_rom_file(self):
         """Scarica effettivamente la ROM dal server con sistema di fallback per le estensioni"""
@@ -1203,6 +1239,7 @@ class ArcadeUI:
         logger.info(f"📂 Directory creata: {dest_dir}")
         
         # Prova ogni estensione in sequenza
+        failure_reasons = []
         for i, (url, extension) in enumerate(zip(rom_download_urls, rom_extensions)):
             full_rom_path = f"{self.download_info['roms_path']}/{rom_name}.{extension}"
             
@@ -1211,21 +1248,44 @@ class ArcadeUI:
             logger.info(f"📁 Destinazione: {full_rom_path}")
             
             try:
+                # Aggiorna URL corrente per la UI
+                self.download_current_url = url
+                
                 # Effettua il download
                 response = requests.get(url, stream=True, timeout=30)
                 response.raise_for_status()
                 
                 # Ottieni la dimensione del file
                 total_size = int(response.headers.get('content-length', 0))
+                self.download_total_bytes = total_size
+                self.download_bytes_downloaded = 0
+                self.download_progress = 0.0
                 logger.info(f"📏 Dimensione file: {total_size // (1024*1024)}MB" if total_size > 0 else "📏 Dimensione file: Sconosciuta")
                 
-                # Scrivi il file
+                # Scrivi il file con aggiornamento progresso
                 downloaded = 0
+                import time
+                start_time = time.time()
+                last_update = start_time
+                
                 with open(full_rom_path, 'wb') as f:
                     for chunk in response.iter_content(chunk_size=8192):
                         if chunk:
                             f.write(chunk)
                             downloaded += len(chunk)
+                            self.download_bytes_downloaded = downloaded
+                            
+                            # Calcola progresso
+                            if total_size > 0:
+                                self.download_progress = downloaded / total_size
+                            
+                            # Calcola velocità ogni 0.5 secondi
+                            current_time = time.time()
+                            if current_time - last_update >= 0.5:
+                                elapsed = current_time - start_time
+                                if elapsed > 0:
+                                    self.download_speed = downloaded / elapsed
+                                last_update = current_time
                             
                             # Log progresso ogni 1MB
                             if downloaded % (1024 * 1024) == 0:
@@ -1247,11 +1307,15 @@ class ArcadeUI:
                     continue
                     
             except requests.exceptions.RequestException as e:
+                error_msg = f"{extension.upper()}: {str(e)}"
+                failure_reasons.append(error_msg)
                 logger.warning(f"⚠️ Download fallito per {extension.upper()}: {e}")
                 if i < len(rom_download_urls) - 1:
                     logger.info(f"🔄 Provo con la prossima estensione...")
                 continue
             except Exception as e:
+                error_msg = f"{extension.upper()}: {str(e)}"
+                failure_reasons.append(error_msg)
                 logger.warning(f"⚠️ Errore durante il download {extension.upper()}: {e}")
                 if i < len(rom_download_urls) - 1:
                     logger.info(f"🔄 Provo con la prossima estensione...")
@@ -1259,6 +1323,11 @@ class ArcadeUI:
         
         # Se arriviamo qui, tutti i tentativi sono falliti
         logger.error(f"❌ Download fallito per tutte le estensioni: {', '.join(rom_extensions)}")
+        # Imposta il motivo del fallimento con i dettagli
+        if failure_reasons:
+            self.download_failure_reason = " | ".join(failure_reasons)
+        else:
+            self.download_failure_reason = "Tutti gli URL hanno fallito"
         return False
     
     def search_game_info(self):
@@ -1828,9 +1897,28 @@ class ArcadeUI:
         overlay.fill((0, 0, 0))
         self.screen.blit(overlay, (0, 0))
         
-        # Box di conferma
-        box_width = 800
-        box_height = 490  # Aumentato per contenere URL e stato della cartella
+        # Box di conferma - aumentata larghezza per link lunghi
+        box_width = 900  # Aumentato da 800 a 900 per contenere link lunghi
+        
+        # Calcola altezza dinamica basata sul numero di URL e stato download
+        urls = self.download_info.get('rom_download_urls', [])
+        base_height = 400  # Altezza base
+        url_height = len(urls) * 25  # 25 pixel per URL (può essere più se wrapped)
+        
+        # Aggiungi spazio extra se in download o completato per barra di progresso
+        if self.download_state in ['downloading', 'success', 'error']:
+            progress_height = 120  # Spazio per barra di progresso e info
+            if self.download_state in ['success', 'error']:
+                progress_height += 80  # Spazio extra per messaggio di completamento
+                if self.download_state == 'error' and self.download_failure_reason:
+                    # Spazio extra per il motivo del fallimento
+                    max_chars = (box_width - 40) // 8
+                    wrapped_reasons = self.wrap_text(self.download_failure_reason, max_chars)
+                    progress_height += len(wrapped_reasons) * 25 + 20  # 25px per riga + margine
+        else:
+            progress_height = 0
+            
+        box_height = base_height + url_height + progress_height
         box_x = (screen_width - box_width) // 2
         box_y = (screen_height - box_height) // 2
         
@@ -1878,9 +1966,16 @@ class ArcadeUI:
         y_offset += 30
         
         for i, (url, ext) in enumerate(zip(urls, extensions)):
-            url_line = self.font_small.render(f"  {i+1}. {ext.upper()}: {url}", True, self.colors['text_secondary'])
-            self.screen.blit(url_line, (box_x + 20, y_offset))
-            y_offset += 25
+            # Calcola la larghezza massima disponibile per il testo (larghezza box - margini)
+            max_chars = (box_width - 40) // 8  # 8 pixel per carattere approssimativo per font_small
+            url_text = f"  {i+1}. {ext.upper()}: {url}"
+            
+            # Usa text wrapping per link lunghi
+            wrapped_lines = self.wrap_text(url_text, max_chars)
+            for line in wrapped_lines:
+                url_line = self.font_small.render(line, True, self.colors['text_secondary'])
+                self.screen.blit(url_line, (box_x + 20, y_offset))
+                y_offset += 25
         
         # Stato cartella destinazione
         folder_exists = self.download_info.get('folder_exists', False)
@@ -1895,15 +1990,115 @@ class ArcadeUI:
         self.screen.blit(folder_text, (box_x + 20, y_offset))
         y_offset += 60
         
-        # Istruzioni - cambiano in base allo stato del download
-        if self.download_state == 'downloading':
-            instructions = self.font_medium.render("Attendere...", True, self.colors['accent2'])
-        elif self.download_state in ['success', 'error']:
-            # Mostra il messaggio di risultato
-            msg = self.font_medium.render(self.download_result_message, True, self.colors['text'])
-            self.screen.blit(msg, (box_x + 20, y_offset))
-            y_offset += 50
-            instructions = self.font_medium.render("Premi un tasto per chiudere", True, self.colors['accent2'])
+        # Mostra progresso download se in corso o completato
+        if self.download_state in ['downloading', 'success', 'error']:
+            # URL corrente
+            if self.download_current_url:
+                if self.download_state == 'downloading':
+                    url_text = f"Scaricando da: {self.download_current_url}"
+                else:
+                    url_text = f"Scaricato da: {self.download_current_url}"
+                current_url_text = self.font_small.render(url_text, True, self.colors['text_secondary'])
+                self.screen.blit(current_url_text, (box_x + 20, y_offset))
+                y_offset += 30
+            
+            # Barra di progresso
+            progress_width = box_width - 40
+            progress_height = 20
+            progress_x = box_x + 20
+            progress_y = y_offset
+            
+            # Sfondo barra
+            pygame.draw.rect(self.screen, (50, 50, 50), (progress_x, progress_y, progress_width, progress_height))
+            pygame.draw.rect(self.screen, (100, 100, 100), (progress_x, progress_y, progress_width, progress_height), 2)
+            
+            # Barra di progresso - sempre al 100% se completato
+            if self.download_state == 'success':
+                progress_to_show = 1.0  # 100% per download completato
+                bar_color = (100, 255, 100)  # Verde per successo
+            elif self.download_state == 'error':
+                progress_to_show = self.download_progress  # Mostra progresso al momento dell'errore
+                bar_color = (255, 100, 100)  # Rosso per errore
+            else:
+                progress_to_show = self.download_progress  # Progresso normale durante download
+                bar_color = self.colors['accent']  # Colore normale
+            
+            if progress_to_show > 0:
+                filled_width = int(progress_width * progress_to_show)
+                pygame.draw.rect(self.screen, bar_color, (progress_x, progress_y, filled_width, progress_height))
+            
+            y_offset += 40
+            
+            # Informazioni dettagliate
+            if self.download_total_bytes > 0:
+                # Bytes scaricati / totali - gestisci file piccoli
+                downloaded_kb = self.download_bytes_downloaded / 1024
+                total_kb = self.download_total_bytes / 1024
+                
+                if total_kb < 1024:  # File sotto 1MB
+                    if self.download_state == 'success':
+                        progress_text = f"{downloaded_kb:.1f}KB / {total_kb:.1f}KB (100.0%)"
+                    else:
+                        progress_text = f"{downloaded_kb:.1f}KB / {total_kb:.1f}KB ({self.download_progress * 100:.1f}%)"
+                else:  # File sopra 1MB
+                    downloaded_mb = self.download_bytes_downloaded / (1024 * 1024)
+                    total_mb = self.download_total_bytes / (1024 * 1024)
+                    if self.download_state == 'success':
+                        progress_text = f"{downloaded_mb:.1f}MB / {total_mb:.1f}MB (100.0%)"
+                    else:
+                        progress_text = f"{downloaded_mb:.1f}MB / {total_mb:.1f}MB ({self.download_progress * 100:.1f}%)"
+            else:
+                # Dimensione sconosciuta
+                downloaded_kb = self.download_bytes_downloaded / 1024
+                if downloaded_kb < 1024:
+                    progress_text = f"{downloaded_kb:.1f}KB scaricati"
+                else:
+                    downloaded_mb = self.download_bytes_downloaded / (1024 * 1024)
+                    progress_text = f"{downloaded_mb:.1f}MB scaricati"
+            
+            progress_info = self.font_medium.render(progress_text, True, self.colors['text'])
+            self.screen.blit(progress_info, (box_x + 20, y_offset))
+            y_offset += 30
+            
+            # Velocità di download (solo se in corso o se abbiamo dati)
+            if self.download_state == 'downloading' and self.download_speed > 0:
+                speed_mb_s = self.download_speed / (1024 * 1024)
+                speed_text = f"Velocità: {speed_mb_s:.1f} MB/s"
+                speed_info = self.font_small.render(speed_text, True, self.colors['text_secondary'])
+                self.screen.blit(speed_info, (box_x + 20, y_offset))
+                y_offset += 30
+            
+            # Messaggio di stato e istruzioni
+            if self.download_state == 'downloading':
+                instructions = self.font_medium.render("Download in corso...", True, self.colors['accent2'])
+            elif self.download_state == 'success':
+                # Mostra messaggio di successo sotto le informazioni
+                y_offset += 20  # Spazio extra prima del messaggio
+                success_msg = self.font_large.render("✅ DOWNLOAD COMPLETATO", True, (100, 255, 100))
+                success_rect = success_msg.get_rect(center=(screen_width//2, y_offset))
+                self.screen.blit(success_msg, success_rect)
+                y_offset += 50
+                instructions = self.font_medium.render("Premi un tasto per chiudere", True, self.colors['accent2'])
+            elif self.download_state == 'error':
+                # Mostra messaggio di errore sotto le informazioni
+                y_offset += 20  # Spazio extra prima del messaggio
+                error_msg = self.font_large.render("❌ DOWNLOAD FALLITO", True, (255, 100, 100))
+                error_rect = error_msg.get_rect(center=(screen_width//2, y_offset))
+                self.screen.blit(error_msg, error_rect)
+                y_offset += 40
+                
+                # Mostra motivo del fallimento se disponibile
+                if self.download_failure_reason:
+                    # Usa text wrapping per il motivo del fallimento
+                    max_chars = (box_width - 40) // 8  # 8 pixel per carattere approssimativo
+                    wrapped_reasons = self.wrap_text(self.download_failure_reason, max_chars)
+                    for reason_line in wrapped_reasons:
+                        reason_text = self.font_small.render(f"Motivo: {reason_line}", True, (255, 150, 150))
+                        self.screen.blit(reason_text, (box_x + 20, y_offset))
+                        y_offset += 25
+                
+                y_offset += 20
+                instructions = self.font_medium.render("Premi un tasto per chiudere", True, self.colors['accent2'])
         else:
             # Istruzioni normali conferma/annulla
             if folder_exists:

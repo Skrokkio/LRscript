@@ -90,30 +90,49 @@ class ConfigUI:
             screen.blit(value_text, value_rect)
         
         # Pulsanti di controllo
-        control_y = start_y + len(self.buttons) * line_height + 30
-        control_spacing = 150
+        control_y = start_y + len(self.buttons) * line_height + 40
+        button_width = 140
+        button_height = 45
+        button_spacing = 20
+        back_button_width = 250  # Pulsante molto più largo per "TORNA AL MENU"
+        
+        # Calcola la posizione centrale per i 3 pulsanti
+        total_width = (button_width * 2) + back_button_width + (button_spacing * 2)
+        start_x = (self.screen_width - total_width) // 2
         
         # SALVA
-        save_x = (self.screen_width - control_spacing * 2) // 2
-        save_rect = pygame.Rect(save_x, control_y, 120, 40)
+        save_rect = pygame.Rect(start_x, control_y, button_width, button_height)
         save_color = self.colors['accent'] if self.selected_index == len(self.buttons) else self.colors['surface']
         pygame.draw.rect(screen, save_color, save_rect)
+        pygame.draw.rect(screen, self.colors['text_secondary'], save_rect, 2)  # Bordo
         save_text = self.fonts['medium'].render("SALVA", True, self.colors['text'])
         save_text_rect = save_text.get_rect(center=save_rect.center)
         screen.blit(save_text, save_text_rect)
         
         # RESET DEFAULT
-        reset_x = save_x + control_spacing
-        reset_rect = pygame.Rect(reset_x, control_y, 120, 40)
+        reset_rect = pygame.Rect(start_x + button_width + button_spacing, control_y, button_width, button_height)
         reset_color = self.colors['accent'] if self.selected_index == len(self.buttons) + 1 else self.colors['surface']
         pygame.draw.rect(screen, reset_color, reset_rect)
+        pygame.draw.rect(screen, self.colors['text_secondary'], reset_rect, 2)  # Bordo
         reset_text = self.fonts['medium'].render("RESET", True, self.colors['text'])
         reset_text_rect = reset_text.get_rect(center=reset_rect.center)
         screen.blit(reset_text, reset_text_rect)
         
+        # TORNA AL MENU (pulsante più largo)
+        back_rect = pygame.Rect(start_x + (button_width + button_spacing) * 2, control_y, back_button_width, button_height)
+        back_color = self.colors['accent'] if self.selected_index == len(self.buttons) + 2 else self.colors['surface']
+        pygame.draw.rect(screen, back_color, back_rect)
+        pygame.draw.rect(screen, self.colors['text_secondary'], back_rect, 2)  # Bordo
+        back_text = self.fonts['medium'].render("TORNA AL MENU", True, self.colors['text'])
+        # Posiziona il testo a destra nel pulsante
+        back_text_rect = back_text.get_rect()
+        back_text_rect.right = back_rect.right - 10  # 10px di margine dal bordo destro
+        back_text_rect.centery = back_rect.centery
+        screen.blit(back_text, back_text_rect)
+        
         # ESC
         esc_text = self.fonts['small'].render("ESC - Esci senza salvare", True, self.colors['text_secondary'])
-        esc_rect = esc_text.get_rect(center=(self.screen_width // 2, control_y + 60))
+        esc_rect = esc_text.get_rect(center=(self.screen_width // 2, control_y + button_height + 20))
         screen.blit(esc_text, esc_rect)
         
         # Mostra conferma salvataggio se attiva
@@ -129,8 +148,8 @@ class ConfigUI:
         screen.blit(overlay, (0, 0))
         
         # Box di conferma
-        box_width = 500
-        box_height = 200
+        box_width = 650  # Allargato per contenere il testo lungo
+        box_height = 220  # Leggermente più alto per migliore proporzione
         box_x = (self.screen_width - box_width) // 2
         box_y = (self.screen_height - box_height) // 2
         
@@ -141,17 +160,17 @@ class ConfigUI:
         
         # Titolo
         title_text = self.fonts['large'].render("CONFIGURAZIONE SALVATA", True, (100, 255, 100))
-        title_rect = title_text.get_rect(center=(self.screen_width//2, box_y + 50))
+        title_rect = title_text.get_rect(center=(self.screen_width//2, box_y + 60))
         screen.blit(title_text, title_rect)
         
         # Messaggio
         message_text = self.fonts['medium'].render("Le impostazioni sono state salvate con successo!", True, self.colors['text'])
-        message_rect = message_text.get_rect(center=(self.screen_width//2, box_y + 100))
+        message_rect = message_text.get_rect(center=(self.screen_width//2, box_y + 120))
         screen.blit(message_text, message_rect)
         
         # Istruzioni
         instructions_text = self.fonts['small'].render("La conferma scomparirà automaticamente...", True, self.colors['text_secondary'])
-        instructions_rect = instructions_text.get_rect(center=(self.screen_width//2, box_y + 140))
+        instructions_rect = instructions_text.get_rect(center=(self.screen_width//2, box_y + 160))
         screen.blit(instructions_text, instructions_rect)
     
     def handle_input(self, action, button_number=None):
@@ -178,20 +197,34 @@ class ConfigUI:
                 self.capture_mode = False
                 self.capturing_for = None
                 return None  # Continua nella schermata config
-        elif action == 'back':
-            # Annulla cattura
-            self.capture_mode = False
-            self.capturing_for = None
-            return None  # Continua nella schermata config
         else:
             # Navigazione normale
             if action == 'up':
                 if self.selected_index > 0:
                     self.selected_index -= 1
             elif action == 'down':
-                max_index = len(self.buttons) + 1  # +1 per i pulsanti di controllo
+                max_index = len(self.buttons) + 2  # +2 per i pulsanti di controllo (SALVA, RESET, TORNA)
                 if self.selected_index < max_index:
                     self.selected_index += 1
+            elif action == 'left':
+                # Navigazione orizzontale
+                if self.selected_index >= len(self.buttons):
+                    # Se siamo sui pulsanti di controllo, vai al precedente
+                    if self.selected_index > len(self.buttons):
+                        self.selected_index -= 1
+                elif self.selected_index < len(self.buttons):
+                    # Se siamo sui pulsanti di mappatura, vai all'ultimo pulsante di controllo
+                    self.selected_index = len(self.buttons) + 2  # TORNA AL MENU
+            elif action == 'right':
+                # Navigazione orizzontale
+                if self.selected_index >= len(self.buttons):
+                    # Se siamo sui pulsanti di controllo, vai al successivo
+                    max_control_index = len(self.buttons) + 2  # SALVA, RESET, TORNA
+                    if self.selected_index < max_control_index:
+                        self.selected_index += 1
+                elif self.selected_index < len(self.buttons):
+                    # Se siamo sui pulsanti di mappatura, vai al primo pulsante di controllo
+                    self.selected_index = len(self.buttons)  # SALVA
             elif action == 'confirm':
                 # Se siamo in modalità cattura, annulla la cattura
                 if self.capture_mode:
@@ -214,6 +247,10 @@ class ConfigUI:
                     # RESET DEFAULT
                     logger.info("Reset configurazione")
                     self.reset_to_default()
+                elif self.selected_index == len(self.buttons) + 2:
+                    # TORNA AL MENU
+                    logger.info("Torna al menu")
+                    return 'exit'
             elif action == 'back':
                 # ESC - esci senza salvare
                 return 'exit'
