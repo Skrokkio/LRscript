@@ -10,7 +10,17 @@ import os
 import time
 import pygame
 import logging
-from .constants import CUSTOM_FONT_PATH, FONT_SIZE_LARGE, FONT_SIZE_MEDIUM, FONT_SIZE_SMALL, FONT_SIZE_TINY
+# Importa le costanti dal file principale
+import sys
+import os
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Definisce le costanti localmente
+CUSTOM_FONT_PATH = None
+FONT_SIZE_LARGE = 32
+FONT_SIZE_MEDIUM = 24
+FONT_SIZE_SMALL = 18
+FONT_SIZE_TINY = 14
 
 logger = logging.getLogger('LRscript')
 
@@ -45,15 +55,11 @@ class PlatformMenu:
             'special': True  # Per distinguerlo dalle piattaforme
         }
         
-        # Calcola dimensioni adattabili alla risoluzione
-        scale_factor = screen_width / 1920.0
-        self.platform_width = max(int(300 * scale_factor), 200)    # Larghezza rettangolo piattaforma (DIMEZZATA)
+        # Dimensioni fisse - nessuna scalatura
+        self.platform_width = 300    # Larghezza rettangolo piattaforma fissa
+        self.platform_height = 160   # Altezza rettangolo piattaforma fissa
         
-        # Calcola l'altezza basata sulla dimensione del font (RADDOPPIATA per pulsanti più belli)
-        font_height = self.font_medium.get_height()
-        self.platform_height = max(int(160 * scale_factor), font_height + 40)  # Altezza raddoppiata per pulsanti più belli
-        
-        self.platform_spacing = max(int(15 * scale_factor), 10)    # Spazio tra rettangoli
+        self.platform_spacing = 15    # Spazio tra rettangoli fisso
         
         # Carica il logo dell'applicazione
         self.logo_image = self.load_logo()
@@ -293,7 +299,7 @@ class PlatformMenu:
         elif selected_y + self.platform_height > self.start_y + available_height:
             self.scroll_offset = max(0, (self.selected_platform + 1) * item_height - available_height)
 
-    def draw(self, screen, debug_message="", debug_timer=0, debug_duration=0):
+    def draw(self, screen):
         """Disegna il menu delle piattaforme"""
         # Se il menu immagini è aperto, disegna quello
         if self.show_image_menu:
@@ -439,12 +445,7 @@ class PlatformMenu:
         # Footbar rimossa - ora usiamo il footer dinamico unificato
         # self.draw_footbar(screen)
         
-        # Debug input - a sinistra nel footer
-        if debug_message and time.time() - debug_timer < debug_duration:
-            debug_surface = self.font_small.render(debug_message, True, self.colors['accent2'])
-            debug_x = 20  # Posizione a sinistra
-            debug_y = self.screen_height - 30
-            screen.blit(debug_surface, (debug_x, debug_y))
+        # Debug input rimosso - ora gestito dal footer dinamico del main
 
     def draw_scrollbar(self, screen):
         """Disegna la scrollbar verticale"""
@@ -652,10 +653,20 @@ class PlatformMenu:
         overlay.fill((0, 0, 0))
         screen.blit(overlay, (0, 0))
         
-        # Titolo
-        title_text = self.font_large.render("SCEGLI IMMAGINE PULSANTE", True, self.colors['text'])
-        title_rect = title_text.get_rect(center=(self.screen_width // 2, 100))
-        screen.blit(title_text, title_rect)
+        # Titolo con nome piattaforma
+        if self.selected_platform > 0:
+            platform = self.platform_manager.get_platform(self.selected_platform - 1)
+            if platform:
+                platform_name = platform['name']
+                title_text = f"{platform_name} - SCEGLI IMMAGINE PULSANTE"
+            else:
+                title_text = "SCEGLI IMMAGINE PULSANTE"
+        else:
+            title_text = "SCEGLI IMMAGINE PULSANTE"
+        
+        title_surface = self.font_large.render(title_text, True, self.colors['text'])
+        title_rect = title_surface.get_rect(center=(self.screen_width // 2, 100))
+        screen.blit(title_surface, title_rect)
         
         # Istruzioni
         instructions = self.font_small.render("Usa SU/GIÙ/SINISTRA/DESTRA per navigare, INVIO per applicare, BACK per annullare", True, self.colors['text_secondary'])

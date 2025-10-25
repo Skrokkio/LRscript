@@ -7,6 +7,19 @@ Versione arcade con Pygame per controlli joystick nativi
 e interfaccia ottimizzata per cabinet arcade.
 """
 
+# =============================================================================
+# CONFIGURAZIONE FONT - MODIFICA QUESTI VALORI PER CAMBIARE FONT E DIMENSIONI
+# =============================================================================
+FONT_NAME = "None"  # Nome del font da usare (Mario.ttf, zelek.ttf, Pixel-UniCode.ttf o None per font di sistema)
+FONT_SCALE_FACTOR = 1 # Riduce le dimensioni del font (0.5 = metà, 1.0 = normale, 1.5 = più grande)
+# =============================================================================
+
+# =============================================================================
+# CONFIGURAZIONE RISOLUZIONE - MODIFICA QUESTI VALORE PER CAMBIARE RISOLUZIONE
+# =============================================================================
+RESOLUTION_MODE = 1 # 1 = 1280x1024 forzata, 2 = auto-rilevamento (default)
+# =============================================================================
+
 import pygame
 import sys
 import os
@@ -59,18 +72,6 @@ CartellaHome = os.path.expanduser("~")
 nomefilerom = "CIAO"
 LinguaArcade = "&lang=it"
 
-# =============================================================================
-# CONFIGURAZIONE FONT - MODIFICA QUESTI VALORI PER CAMBIARE FONT E DIMENSIONI
-# =============================================================================
-FONT_NAME = "None"  # Nome del font da usare (Mario.ttf, zelek.ttf, Pixel-UniCode.ttf o None per font di sistema)
-FONT_SCALE_FACTOR = 1.6 # Riduce le dimensioni del font (0.5 = metà, 1.0 = normale, 1.5 = più grande)
-# =============================================================================
-
-# =============================================================================
-# CONFIGURAZIONE RISOLUZIONE - MODIFICA QUESTO VALORE PER CAMBIARE RISOLUZIONE
-# =============================================================================
-RESOLUTION_MODE = 1 # 1 = 1280x1024 forzata, 2 = auto-rilevamento (default)
-# =============================================================================
 
 # Colori arcade ispirati a RGSX
 ARCADE_COLORS = {
@@ -110,22 +111,26 @@ def get_screen_resolution():
 SCREEN_WIDTH, SCREEN_HEIGHT = get_screen_resolution()
 logger.info(f"Risoluzione finale: {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
 
-# Font scalabili basati sulla risoluzione
+# Font a dimensione fissa - nessuna scalatura
 def get_scaled_font_size(base_size, screen_width):
-    """Calcola la dimensione del font basata sulla risoluzione dello schermo"""
+    """Ritorna la dimensione del font fissa senza scalatura"""
+    return base_size
+
+def get_scaled_icon_size(base_size, screen_width):
+    """Calcola la dimensione delle icone basata sulla risoluzione dello schermo"""
     # Usa 1920 come risoluzione di riferimento
     scale_factor = screen_width / 1920.0
-    # Applica il fattore di scala configurabile
-    final_size = base_size * scale_factor * FONT_SCALE_FACTOR
-    return max(int(final_size), 8)  # Minimo 8px per evitare font troppo piccoli
+    # Applica il fattore di scala
+    final_size = base_size * scale_factor
+    return max(int(final_size), 16)  # Minimo 16px per evitare icone troppo piccole
 
-# Font scalabili
-FONT_SIZE_LARGE = get_scaled_font_size(32, SCREEN_WIDTH)
-FONT_SIZE_MEDIUM = get_scaled_font_size(24, SCREEN_WIDTH)
-FONT_SIZE_SMALL = get_scaled_font_size(18, SCREEN_WIDTH)
-FONT_SIZE_TINY = get_scaled_font_size(14, SCREEN_WIDTH)
+# Font a dimensione fissa - nessuna scalatura
+FONT_SIZE_LARGE = 32
+FONT_SIZE_MEDIUM = 24
+FONT_SIZE_SMALL = 18
+FONT_SIZE_TINY = 14
 
-logger.info(f"Font scalati per {SCREEN_WIDTH}x{SCREEN_HEIGHT} (fattore: {FONT_SCALE_FACTOR}): L={FONT_SIZE_LARGE}, M={FONT_SIZE_MEDIUM}, S={FONT_SIZE_SMALL}, T={FONT_SIZE_TINY}")
+logger.info(f"Font fissi (nessuna scalatura): L={FONT_SIZE_LARGE}, M={FONT_SIZE_MEDIUM}, S={FONT_SIZE_SMALL}, T={FONT_SIZE_TINY}")
 
 # Carica font personalizzato se disponibile
 def load_custom_font():
@@ -257,6 +262,12 @@ class ArcadeUI:
         self.description_scroll = 0
         self.description_lines = []
         
+        # Sistema toast per notifiche temporanee
+        self.toast_message = ""
+        self.toast_timer = 0
+        self.toast_duration = 0
+        self.toast_visible = False
+        
         # Variabili per feedback joystick detection
         self.joystick_detection_message = ""
         self.joystick_detection_timer = 0
@@ -293,7 +304,10 @@ class ArcadeUI:
     def load_footer_icons(self):
         """Carica le icone PNG per il footer"""
         icons = {}
-        icon_size = (40, 40)  # Dimensione ottimizzata per le icone
+        # Calcola dimensione responsive delle icone
+        base_icon_size = 40  # Dimensione di base per 1920px
+        scaled_icon_size = get_scaled_icon_size(base_icon_size, SCREEN_WIDTH)
+        icon_size = (scaled_icon_size, scaled_icon_size)  # Mantieni quadrato
         
         # Mappa delle icone e delle loro funzioni
         icon_config = {
@@ -314,6 +328,7 @@ class ArcadeUI:
                     logger.debug(f"Icona caricata: {png_file} -> {function}")
         
         logger.info(f"Caricate {len(icons)} icone PNG per il footer")
+        logger.info(f"Dimensioni icone footer: {icon_size[0]}x{icon_size[1]} per risoluzione {SCREEN_WIDTH}x{SCREEN_HEIGHT}")
         return icons
     
     def load_png_icon(self, png_path, size):
@@ -334,6 +349,54 @@ class ArcadeUI:
         self.last_input_timer = time.time()
         # Log solo per debug interno, non stampa nel terminale
         logger.debug(f"Input: {input_type}: {key_name}")
+    
+    def show_toast(self, message, duration=3.0):
+        """Mostra un toast temporaneo"""
+        self.toast_message = message
+        self.toast_timer = time.time()
+        self.toast_duration = duration
+        self.toast_visible = True
+        logger.debug(f"Toast mostrato: {message}")
+    
+    def hide_toast(self):
+        """Nasconde il toast"""
+        self.toast_visible = False
+        self.toast_message = ""
+        logger.debug("Toast nascosto")
+    
+    def draw_toast(self):
+        """Disegna il toast se visibile"""
+        if not self.toast_visible or not self.toast_message:
+            return
+        
+        # Controlla se il toast è scaduto
+        if time.time() - self.toast_timer > self.toast_duration:
+            self.hide_toast()
+            return
+        
+        # Ottieni dimensioni schermo
+        screen_info = self.get_screen_info()
+        screen_width = screen_info['width']
+        screen_height = screen_info['height']
+        
+        # Posizione del toast (centro alto dello schermo)
+        toast_x = screen_width // 2
+        toast_y = 100
+        
+        # Renderizza il testo del toast
+        toast_surface = self.font_medium.render(self.toast_message, True, self.colors['text'])
+        toast_rect = toast_surface.get_rect(center=(toast_x, toast_y))
+        
+        # Sfondo semi-trasparente per il toast
+        padding = 20
+        bg_rect = toast_rect.inflate(padding * 2, padding)
+        bg_surface = pygame.Surface((bg_rect.width, bg_rect.height))
+        bg_surface.set_alpha(200)  # Semi-trasparente
+        bg_surface.fill(self.colors['surface'])
+        
+        # Disegna il toast
+        self.screen.blit(bg_surface, bg_rect)
+        self.screen.blit(toast_surface, toast_rect)
     
     def load_background_image(self):
         """Carica l'immagine di sfondo dell'applicazione"""
@@ -1344,6 +1407,18 @@ class ArcadeUI:
                 
                 print(f"🔍 Cerca info per: {game_name} ({rom_name})")
                 
+                # Mostra toast di caricamento PRIMA della richiesta HTTP
+                self.show_toast("Ricerca in corso...", 10.0)  # Durata lunga per coprire tutta la ricerca
+                
+                # Forza l'aggiornamento dello schermo per mostrare il toast
+                self.draw_main_screen()
+                self.draw_dynamic_footer(SCREEN_WIDTH, SCREEN_HEIGHT)
+                self.draw_toast()
+                pygame.display.flip()
+                
+                # Breve pausa per assicurarsi che il toast venga mostrato
+                pygame.time.wait(100)
+                
                 # Inizializza con valori predefiniti
                 self.game_info = {
                     'name': game_name,
@@ -1429,10 +1504,13 @@ class ArcadeUI:
                 
                 except requests.exceptions.ConnectionError:
                     print("⚠️ Errore di connessione durante il recupero delle informazioni")
+                    self.hide_toast()  # Nasconde il toast in caso di errore
                 except requests.exceptions.Timeout:
                     print("⚠️ Timeout durante il recupero delle informazioni")
+                    self.hide_toast()  # Nasconde il toast in caso di errore
                 except Exception as e:
                     print(f"⚠️ Errore nel recupero delle informazioni: {e}")
+                    self.hide_toast()  # Nasconde il toast in caso di errore
                 
                 # Prepara le righe della descrizione per lo scroll
                 # Calcola la larghezza della sezione info dinamicamente
@@ -1445,6 +1523,9 @@ class ArcadeUI:
                 
                 # Carica le immagini
                 self.load_game_images(rom_name)
+                
+                # Nasconde il toast quando la ricerca è completata
+                self.hide_toast()
                 
                 print("✅ Informazioni gioco caricate")
             else:
@@ -1810,32 +1891,22 @@ class ArcadeUI:
         
         if self.current_screen == 'menu':
             # Disegna il menu delle piattaforme
-            self.platform_menu.draw(self.screen, self.last_input_message, self.last_input_timer, self.input_debug_duration)
+            self.platform_menu.draw(self.screen)
             # Aggiungi footer dinamico per il menu
-            context_info = [
-                "[MENU] Selezione Piattaforma",
-                f"[JOY] {self.joystick_manager.joystick_name if self.joystick_manager.joystick_detected else 'Non rilevato'}"
-            ]
-            self.draw_dynamic_footer(SCREEN_WIDTH, SCREEN_HEIGHT, context_info)
+            self.draw_dynamic_footer(SCREEN_WIDTH, SCREEN_HEIGHT)
         elif self.current_screen == 'config':
             # Disegna la schermata configurazione
             self.config_ui.draw(self.screen)
             # Aggiungi footer dinamico per la configurazione
-            context_info = [
-                "[CONFIG] Configurazione Pulsanti Joystick",
-                f"[JOY] {self.joystick_manager.joystick_name if self.joystick_manager.joystick_detected else 'Non rilevato'}"
-            ]
-            self.draw_dynamic_footer(SCREEN_WIDTH, SCREEN_HEIGHT, context_info)
+            self.draw_dynamic_footer(SCREEN_WIDTH, SCREEN_HEIGHT)
         else:
             # Disegna la schermata principale
             self.draw_main_screen()
             # Aggiungi footer dinamico per la schermata principale
-            platform_name = self.selected_platform['name'] if self.selected_platform else 'Nessuna piattaforma'
-            context_info = [
-                f"[GAME] {platform_name}",
-                f"[JOY] {self.joystick_manager.joystick_name if self.joystick_manager.joystick_detected else 'Non rilevato'}"
-            ]
-            self.draw_dynamic_footer(SCREEN_WIDTH, SCREEN_HEIGHT, context_info)
+            self.draw_dynamic_footer(SCREEN_WIDTH, SCREEN_HEIGHT)
+        
+        # Disegna il toast se visibile
+        self.draw_toast()
         
         # Aggiorna display
         pygame.display.flip()
@@ -2329,10 +2400,8 @@ class ArcadeUI:
             img_y = y + 10 + (marquee_height - new_height) // 2
             self.screen.blit(scaled_image, (img_x, img_y))
         else:
-            # Mostra "IMAGE PREVIEW" quando non ci sono immagini
-            preview_text = self.font_medium.render("IMAGE PREVIEW", True, self.colors['text_secondary'])
-            text_rect = preview_text.get_rect(center=marquee_rect.center)
-            self.screen.blit(preview_text, text_rect)
+            # Nessuna immagine disponibile - nessun testo mostrato
+            pass
         
         # Contenitore per immagine gioco - rimuoviamo lo sfondo grigio
         game_image_rect = pygame.Rect(x+10, y+marquee_height+30, width-20, game_image_height)
@@ -2382,10 +2451,8 @@ class ArcadeUI:
             # type_text = self.font_small.render(img_type, True, self.colors['accent'])
             # self.screen.blit(type_text, (x + width - 100, y + marquee_height + 10))
         else:
-            # Mostra "IMAGE PREVIEW" quando non ci sono immagini
-            preview_text = self.font_medium.render("IMAGE PREVIEW", True, self.colors['text_secondary'])
-            text_rect = preview_text.get_rect(center=game_image_rect.center)
-            self.screen.blit(preview_text, text_rect)
+            # Nessuna immagine disponibile - nessun testo mostrato
+            pass
     
     def draw_status_bar(self):
         """Disegna la barra di stato"""
@@ -2431,12 +2498,7 @@ class ArcadeUI:
         # Icone SVG al centro del footer (rimosso - ora usiamo footer dinamico)
         # self.draw_footer_icons(screen_width, y, 'main')
         
-        # Debug input - a sinistra nel footer
-        if self.last_input_message and time.time() - self.last_input_timer < self.input_debug_duration:
-            debug_surface = self.font_small.render(self.last_input_message, True, self.colors['accent2'])
-            debug_x = 20  # Posizione a sinistra
-            debug_y = y + 70
-            self.screen.blit(debug_surface, (debug_x, debug_y))
+        # Debug input rimosso - ora gestito dal footer dinamico
     
     def draw_dynamic_footer(self, screen_width, screen_height, context_info=None):
         """Disegna un footer dinamico per tutte le schermate"""
@@ -2449,33 +2511,39 @@ class ArcadeUI:
         footer_surface.fill(self.colors['surface'])
         self.screen.blit(footer_surface, (0, footer_y))
         
-        # Informazioni di contesto (sinistra)
-        if context_info:
-            y_offset = footer_y + 5
-            for info in context_info:
-                info_surface = self.font_medium.render(info, True, self.colors['accent2'])
-                self.screen.blit(info_surface, (20, y_offset))
-                y_offset += 25
+        # Informazioni di contesto rimosse - footer più pulito
         
         # Icone al centro (spostate a destra di una percentuale della larghezza schermo)
         # Calcola offset responsive: 5% della larghezza schermo (circa 100px su 1920px)
         responsive_offset = int(screen_width * 0.05)
         self.draw_footer_icons(screen_width, footer_y, self.current_screen, offset_x=responsive_offset)
         
-        # Informazioni risoluzione e versione (destra)
+        # Informazioni risoluzione e versione (basso a destra)
         resolution_text = f"[SCR] {screen_width}x{screen_height}"
-        resolution_surface = self.font_tiny.render(resolution_text, True, self.colors['text_secondary'])
-        self.screen.blit(resolution_surface, (screen_width - 250, footer_y + 5))
+        resolution_surface = self.font_small.render(resolution_text, True, self.colors['text_secondary'])
         
-        # Versione programma - posizionata a destra
         version_text = f"[VER] {self.platform_manager.get_program_version()}"
-        version_surface = self.font_tiny.render(version_text, True, self.colors['text_secondary'])
-        self.screen.blit(version_surface, (screen_width - 150, footer_y + 70))
+        version_surface = self.font_small.render(version_text, True, self.colors['text_secondary'])
         
-        # Debug input (sinistra in basso)
+        # Calcola posizioni per metterle in basso a destra con spazio tra di loro
+        version_width = version_surface.get_width()
+        resolution_width = resolution_surface.get_width()
+        spacing = 20  # Spazio tra le due label
+        
+        # Posizione Y più in basso (stessa altezza del debug input + qualche pixel)
+        bottom_y = footer_y + 80  # Spostato più in basso di 10px
+        
+        # Posizione X: versione più a destra, risoluzione con spazio
+        version_x = screen_width - version_width - 20  # 20px dal bordo destro
+        resolution_x = version_x - resolution_width - spacing  # Spazio tra le due
+        
+        self.screen.blit(resolution_surface, (resolution_x, bottom_y))
+        self.screen.blit(version_surface, (version_x, bottom_y))
+        
+        # Debug input (sinistra in basso) - allineato con risoluzione e versione
         if hasattr(self, 'last_input_message') and self.last_input_message and time.time() - self.last_input_timer < self.input_debug_duration:
             debug_surface = self.font_small.render(self.last_input_message, True, self.colors['accent2'])
-            self.screen.blit(debug_surface, (20, footer_y + 70))
+            self.screen.blit(debug_surface, (20, bottom_y))  # Stessa Y delle altre label
 
     def draw_footer_icons(self, screen_width, footer_y, screen_type='main', offset_x=0):
         """Disegna le icone PNG nel footer"""

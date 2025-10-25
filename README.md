@@ -5,7 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.x-green)](https://python.org)
 [![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
 
-🎮 **Gestore di giochi retro con interfaccia arcade ottimizzata per cabinet**
+🎮 **Gestore di giochi retro con interfaccia arcade ottimizzata per cabinato Arcade con Batocera**
 
 > ⚠️ **Attenzione**: Readme preliminare - work in progress
 
@@ -26,13 +26,16 @@
 ## 🎯 Cosa fa questo script
 
 Questo script prende libera ispirazione al ben migliore e più conosciuto RGSX script per sistemi Batocera.
-Avevo necessità di avere uno script simile per Batocera ma che "pescasse" rom da Archive.
+Avevo necessità di avere uno script simile per Batocera ma che "pescasse" rom da Archive, e durante la mia permanenza a casa causa malattia Oncologica mi distraevo programmando ....
 
 All'avvio carica il file `platforms.xml` e per ogni voce `<platform>` crea un pulsante nella app.
-Premendo il pulsante si carica il rispettivo DAT, e crea una lista di ROMs col nome ufficiale.
-Scegliendo un gioco nella lista, il programma cerca le informazioni utilizzando il nome della ROM ufficiale su internet usando il percorso `<info>`, e i media dal percorso dato in `<ingame>` e `<title>`.
+
+Premendo il pulsante della piattaform, si carica il rispettivo DAT, e crea una lista di ROMs col nome ufficiale.
+Scegliendo un gioco nella lista con Pulsante1 o Enter , il programma cerca,   utilizzando il nome della ROM ufficiale,   le informazioni del gioco usando il percorso `<info>`, e i media  `<ingame>` e `<title>` da "adb.arcadeitalia.net"
 
 Infine premendo da tastiera **Space** oppure il relativo **Button3** mappato col Joystick è possibile scaricare la ROM nel percorso `<roms_path>`.
+
+Il Backspace o Il Pulsante2 mappato servono per tornare indietro o annullare in base al contesto.
 
 
 
@@ -102,7 +105,7 @@ I log vengono salvati in `log/log.txt`
 Questo progetto è distribuito sotto licenza MIT. Vedi il file `LICENSE` per maggiori dettagli.
 
 ## 🆘 Supporto
-
+    per problemi provate a scrivere sulla pagina del progetto, se riesco ci guardo volentieri.
 - **Issues**: [GitHub Issues](https://github.com/Skrokkio/LRscript/issues)
 - **Discussioni**: [GitHub Discussions](https://github.com/Skrokkio/LRscript/discussions)
 

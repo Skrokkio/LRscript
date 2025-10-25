@@ -2,3 +2,19 @@ install copy.sh
 script.sh
 install.sh.backup
 test_simple.sh
+__main__.py.backup_20251024_191030
+__main__.py.backup_backspace_fix_20251024_200620
+__main__.py.backup_config_moved_20251024_193255
+__main__.py.backup_debug_aligned_20251024_192919
+__main__.py.backup_labels_bottom_right_20251024_192534
+__main__.py.backup_labels_lower_font_small_20251024_192816
+__main__.py.backup_loading_modal_20251025_123824
+__main__.py.backup_loading_modal_complete_20251025_124020
+__main__.py.backup_modal_fixes_20251025_124517
+__main__.py.backup_modal_minimum_time_20251025_125117
+__main__.py.backup_modal_simple_delay_20251025_135410
+__main__.py.backup_no_context_labels_20251024_192242
+code/platform_menu.py.backup_20251024_191439
+
+# Cartella cache
+cache/

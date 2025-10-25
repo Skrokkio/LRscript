@@ -1,272 +1,68 @@
-2025-10-24 18:55:38,285 - INFO - === LRscript - Retro Game Manager ===
-2025-10-24 18:55:38,285 - INFO - Avvio applicazione: 2025-10-24 18:55:38
-2025-10-24 18:55:38,517 - INFO - Modalità risoluzione: 1280x1024 forzata
-2025-10-24 18:55:38,517 - INFO - Risoluzione finale: 1280x1024
-2025-10-24 18:55:38,517 - INFO - Font scalati per 1280x1024 (fattore: 1.6): L=34, M=25, S=19, T=14
-2025-10-24 18:55:38,517 - WARNING - Font personalizzato non trovato: ./resources/fonts/None, uso font di sistema
-2025-10-24 18:55:39,206 - INFO - Avviato in modalità fullscreen: 1280x1024
-2025-10-24 18:55:39,206 - INFO - Premi F11 per passare a modalità finestra
-2025-10-24 18:55:39,207 - WARNING - Errore parsing XML: not well-formed (invalid token): line 9, column 52, provo a correggere automaticamente
-2025-10-24 18:55:39,207 - INFO - Versione programma: 0.1.5
-2025-10-24 18:55:39,207 - INFO - Caricate 3 piattaforme dal file XML
-2025-10-24 18:55:39,208 - INFO - Logo caricato: ./resources/LRscript.png -> 133x100
-2025-10-24 18:55:39,209 - INFO - Icona configurazione caricata: ./resources/icons/system.png -> 42x42
-2025-10-24 18:55:39,210 - INFO - Caricate 5 icone PNG per il footer del menu
-2025-10-24 18:55:39,222 - INFO - Caricate 6 immagini da ./resources/logos
-2025-10-24 18:55:39,222 - INFO - Configurazione joystick caricata da ./joystick_mapping.json
-2025-10-24 18:55:39,222 - INFO - Configurazione joystick caricata: {'button_1': 2, 'button_2': 1, 'button_3': 0, 'l1': 4, 'r1': 5, 'start': 9, 'select': -1}
-2025-10-24 18:55:39,222 - INFO - Dispositivi di input rilevati: 1
-2025-10-24 18:55:39,279 - INFO - Joystick selezionato: USB gamepad (indice 0)
-2025-10-24 18:55:39,279 - INFO - Player 0 del cabinato sarà utilizzato per i controlli
-2025-10-24 18:55:39,279 - INFO - Caricamento sfondo: ./resources/sfondo_arcade.jpg
-2025-10-24 18:55:39,290 - INFO - Sfondo caricato: 1280x1024
-2025-10-24 18:55:39,292 - INFO - Caricate 5 icone PNG per il footer
-2025-10-24 18:55:39,292 - INFO - LRscript - Retro Game Manager (Pygame)
-2025-10-24 18:55:39,292 - INFO - JOYSTICK RILEVATO: USB gamepad
-2025-10-24 18:55:47,026 - INFO - Piattaforma selezionata: Mame2010 romset 0.139
-2025-10-24 18:55:47,026 - INFO - Percorsi aggiornati per: Mame2010 romset 0.139
-2025-10-24 18:55:47,027 - INFO - Caricamento giochi da XML: ./dats/MAME0.139u4.dat
-2025-10-24 18:55:47,361 - INFO - Ordinamento alfabetico in corso...
-2025-10-24 18:55:47,363 - INFO - Ordinamento completato
-2025-10-24 18:55:47,386 - INFO - Immagini e informazioni di test caricate
-2025-10-24 18:55:48,771 - INFO - Gioco selezionato: 005 - 005
-2025-10-24 18:55:50,010 - INFO - 🔄 Download ROM: 005
-2025-10-24 18:55:50,010 - INFO - 📁 Percorso destinazione: /userdata/roms/mame/005.zip
-2025-10-24 18:55:50,010 - INFO - 🎮 Nome ROM: 005 (proverà: zip, 7z)
-2025-10-24 18:55:50,010 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:55:50,010 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/005.zip
-2025-10-24 18:55:50,010 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/005.7z
-2025-10-24 18:55:50,010 - INFO - 📂 Cartella destinazione: ✅ Presente
-2025-10-24 18:55:50,010 - INFO - ✅ [Premi SPACE/Pulsante 1 per confermare o ESC/Pulsante 2 per annullare]
-2025-10-24 18:55:51,083 - INFO - ✅ Download confermato!
-2025-10-24 18:55:51,083 - INFO - 🔄 Avvio download: 005
-2025-10-24 18:55:51,083 - INFO - 📁 Destinazione: /userdata/roms/mame/005.zip
-2025-10-24 18:55:51,083 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:55:51,083 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/005.zip
-2025-10-24 18:55:51,083 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/005.7z
-2025-10-24 18:55:51,084 - INFO - 🔄 Avvio download ROM: 005
-2025-10-24 18:55:51,087 - INFO - 📋 Estensioni da provare: zip, 7z
-2025-10-24 18:55:51,087 - INFO - 📂 Directory creata: /userdata/roms/mame
-2025-10-24 18:55:51,087 - INFO - 🎯 Tentativo 1/2: ZIP
-2025-10-24 18:55:51,087 - INFO - 🌐 URL: https://archive.org/download/MAME0.139RomCollectionByGhostware/005.zip
-2025-10-24 18:55:51,087 - INFO - 📁 Destinazione: /userdata/roms/mame/005.zip
-2025-10-24 18:55:52,344 - INFO - 📏 Dimensione file: 0MB
-2025-10-24 18:55:52,375 - INFO - ✅ Download completato: 005.zip
-2025-10-24 18:55:52,375 - INFO - 📏 Dimensione file scaricato: 0MB
-2025-10-24 18:55:52,375 - INFO - 📁 File salvato in: /userdata/roms/mame/005.zip
-2025-10-24 18:55:52,377 - INFO - 🎉 Download completato con successo!
-2025-10-24 18:56:09,236 - INFO - Gioco selezionato: alexkidd - Alex Kidd: The Lost Stars (set...
-2025-10-24 18:56:10,855 - INFO - 🔄 Download ROM: Alex Kidd: The Lost Stars (set 2, unprotected)
-2025-10-24 18:56:10,856 - INFO - 📁 Percorso destinazione: /userdata/roms/mame/alexkidd.zip
-2025-10-24 18:56:10,856 - INFO - 🎮 Nome ROM: alexkidd (proverà: zip, 7z)
-2025-10-24 18:56:10,856 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:56:10,856 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/alexkidd.zip
-2025-10-24 18:56:10,856 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/alexkidd.7z
-2025-10-24 18:56:10,856 - INFO - 📂 Cartella destinazione: ✅ Presente
-2025-10-24 18:56:10,856 - INFO - ✅ [Premi SPACE/Pulsante 1 per confermare o ESC/Pulsante 2 per annullare]
-2025-10-24 18:56:11,345 - INFO - ✅ Download confermato!
-2025-10-24 18:56:11,345 - INFO - 🔄 Avvio download: Alex Kidd: The Lost Stars (set 2, unprotected)
-2025-10-24 18:56:11,345 - INFO - 📁 Destinazione: /userdata/roms/mame/alexkidd.zip
-2025-10-24 18:56:11,345 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:56:11,345 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/alexkidd.zip
-2025-10-24 18:56:11,345 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/alexkidd.7z
-2025-10-24 18:56:11,346 - INFO - 🔄 Avvio download ROM: alexkidd
-2025-10-24 18:56:11,349 - INFO - 📋 Estensioni da provare: zip, 7z
-2025-10-24 18:56:11,349 - INFO - 📂 Directory creata: /userdata/roms/mame
-2025-10-24 18:56:11,349 - INFO - 🎯 Tentativo 1/2: ZIP
-2025-10-24 18:56:11,349 - INFO - 🌐 URL: https://archive.org/download/MAME0.139RomCollectionByGhostware/alexkidd.zip
-2025-10-24 18:56:11,349 - INFO - 📁 Destinazione: /userdata/roms/mame/alexkidd.zip
-2025-10-24 18:56:13,720 - INFO - 📏 Dimensione file: 0MB
-2025-10-24 18:56:14,210 - INFO - ✅ Download completato: alexkidd.zip
-2025-10-24 18:56:14,210 - INFO - 📏 Dimensione file scaricato: 0MB
-2025-10-24 18:56:14,210 - INFO - 📁 File salvato in: /userdata/roms/mame/alexkidd.zip
-2025-10-24 18:56:14,211 - INFO - 🎉 Download completato con successo!
-2025-10-24 18:56:16,814 - INFO - Gioco selezionato: alexkidd1 - Alex Kidd: The Lost Stars (set...
-2025-10-24 18:56:18,861 - INFO - 🔄 Download ROM: Alex Kidd: The Lost Stars (set 1, FD1089A 317-0021)
-2025-10-24 18:56:18,861 - INFO - 📁 Percorso destinazione: /userdata/roms/mame/alexkidd1.zip
-2025-10-24 18:56:18,861 - INFO - 🎮 Nome ROM: alexkidd1 (proverà: zip, 7z)
-2025-10-24 18:56:18,861 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:56:18,861 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/alexkidd1.zip
-2025-10-24 18:56:18,861 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/alexkidd1.7z
-2025-10-24 18:56:18,861 - INFO - 📂 Cartella destinazione: ✅ Presente
-2025-10-24 18:56:18,861 - INFO - ✅ [Premi SPACE/Pulsante 1 per confermare o ESC/Pulsante 2 per annullare]
-2025-10-24 18:56:19,285 - INFO - ✅ Download confermato!
-2025-10-24 18:56:19,285 - INFO - 🔄 Avvio download: Alex Kidd: The Lost Stars (set 1, FD1089A 317-0021)
-2025-10-24 18:56:19,285 - INFO - 📁 Destinazione: /userdata/roms/mame/alexkidd1.zip
-2025-10-24 18:56:19,285 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:56:19,285 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/alexkidd1.zip
-2025-10-24 18:56:19,285 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/alexkidd1.7z
-2025-10-24 18:56:19,286 - INFO - 🔄 Avvio download ROM: alexkidd1
-2025-10-24 18:56:19,289 - INFO - 📋 Estensioni da provare: zip, 7z
-2025-10-24 18:56:19,289 - INFO - 📂 Directory creata: /userdata/roms/mame
-2025-10-24 18:56:19,289 - INFO - 🎯 Tentativo 1/2: ZIP
-2025-10-24 18:56:19,289 - INFO - 🌐 URL: https://archive.org/download/MAME0.139RomCollectionByGhostware/alexkidd1.zip
-2025-10-24 18:56:19,292 - INFO - 📁 Destinazione: /userdata/roms/mame/alexkidd1.zip
-2025-10-24 18:56:21,325 - INFO - 📏 Dimensione file: 0MB
-2025-10-24 18:56:21,822 - INFO - ✅ Download completato: alexkidd1.zip
-2025-10-24 18:56:21,822 - INFO - 📏 Dimensione file scaricato: 0MB
-2025-10-24 18:56:21,822 - INFO - 📁 File salvato in: /userdata/roms/mame/alexkidd1.zip
-2025-10-24 18:56:21,823 - INFO - 🎉 Download completato con successo!
-2025-10-24 18:56:26,227 - INFO - Gioco selezionato: aleck64 - Aleck64 PIF BIOS
-2025-10-24 18:56:28,384 - INFO - 🔄 Download ROM: Aleck64 PIF BIOS
-2025-10-24 18:56:28,384 - INFO - 📁 Percorso destinazione: /userdata/roms/mame/aleck64.zip
-2025-10-24 18:56:28,384 - INFO - 🎮 Nome ROM: aleck64 (proverà: zip, 7z)
-2025-10-24 18:56:28,384 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:56:28,384 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/aleck64.zip
-2025-10-24 18:56:28,384 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/aleck64.7z
-2025-10-24 18:56:28,384 - INFO - 📂 Cartella destinazione: ✅ Presente
-2025-10-24 18:56:28,384 - INFO - ✅ [Premi SPACE/Pulsante 1 per confermare o ESC/Pulsante 2 per annullare]
-2025-10-24 18:56:29,133 - INFO - ✅ Download confermato!
-2025-10-24 18:56:29,133 - INFO - 🔄 Avvio download: Aleck64 PIF BIOS
-2025-10-24 18:56:29,133 - INFO - 📁 Destinazione: /userdata/roms/mame/aleck64.zip
-2025-10-24 18:56:29,134 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:56:29,134 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/aleck64.zip
-2025-10-24 18:56:29,134 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/aleck64.7z
-2025-10-24 18:56:29,134 - INFO - 🔄 Avvio download ROM: aleck64
-2025-10-24 18:56:29,134 - INFO - 📋 Estensioni da provare: zip, 7z
-2025-10-24 18:56:29,137 - INFO - 📂 Directory creata: /userdata/roms/mame
-2025-10-24 18:56:29,137 - INFO - 🎯 Tentativo 1/2: ZIP
-2025-10-24 18:56:29,137 - INFO - 🌐 URL: https://archive.org/download/MAME0.139RomCollectionByGhostware/aleck64.zip
-2025-10-24 18:56:29,138 - INFO - 📁 Destinazione: /userdata/roms/mame/aleck64.zip
-2025-10-24 18:56:31,200 - INFO - 📏 Dimensione file: 0MB
-2025-10-24 18:56:31,203 - INFO - ✅ Download completato: aleck64.zip
-2025-10-24 18:56:31,203 - INFO - 📏 Dimensione file scaricato: 0MB
-2025-10-24 18:56:31,203 - INFO - 📁 File salvato in: /userdata/roms/mame/aleck64.zip
-2025-10-24 18:56:31,206 - INFO - 🎉 Download completato con successo!
-2025-10-24 18:56:33,655 - INFO - Gioco selezionato: alg_bios - American Laser Games BIOS
-2025-10-24 18:56:40,541 - INFO - Gioco selezionato: alienar - Alien Arena
-2025-10-24 18:56:49,882 - INFO - Gioco selezionato: alienar - Alien Arena
-2025-10-24 18:56:53,708 - INFO - 🔄 Download ROM: Alien Arena
-2025-10-24 18:56:53,708 - INFO - 📁 Percorso destinazione: /userdata/roms/mame/alienar.zip
-2025-10-24 18:56:53,708 - INFO - 🎮 Nome ROM: alienar (proverà: zip, 7z)
-2025-10-24 18:56:53,708 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:56:53,708 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/alienar.zip
-2025-10-24 18:56:53,708 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/alienar.7z
-2025-10-24 18:56:53,708 - INFO - 📂 Cartella destinazione: ✅ Presente
-2025-10-24 18:56:53,708 - INFO - ✅ [Premi SPACE/Pulsante 1 per confermare o ESC/Pulsante 2 per annullare]
-2025-10-24 18:56:54,760 - INFO - ✅ Download confermato!
-2025-10-24 18:56:54,761 - INFO - 🔄 Avvio download: Alien Arena
-2025-10-24 18:56:54,761 - INFO - 📁 Destinazione: /userdata/roms/mame/alienar.zip
-2025-10-24 18:56:54,761 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:56:54,761 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/alienar.zip
-2025-10-24 18:56:54,761 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/alienar.7z
-2025-10-24 18:56:54,761 - INFO - 🔄 Avvio download ROM: alienar
-2025-10-24 18:56:54,765 - INFO - 📋 Estensioni da provare: zip, 7z
-2025-10-24 18:56:54,765 - INFO - 📂 Directory creata: /userdata/roms/mame
-2025-10-24 18:56:54,765 - INFO - 🎯 Tentativo 1/2: ZIP
-2025-10-24 18:56:54,765 - INFO - 🌐 URL: https://archive.org/download/MAME0.139RomCollectionByGhostware/alienar.zip
-2025-10-24 18:56:54,765 - INFO - 📁 Destinazione: /userdata/roms/mame/alienar.zip
-2025-10-24 18:56:56,895 - INFO - 📏 Dimensione file: 0MB
-2025-10-24 18:56:56,898 - INFO - ✅ Download completato: alienar.zip
-2025-10-24 18:56:56,899 - INFO - 📏 Dimensione file scaricato: 0MB
-2025-10-24 18:56:56,899 - INFO - 📁 File salvato in: /userdata/roms/mame/alienar.zip
-2025-10-24 18:56:56,901 - INFO - 🎉 Download completato con successo!
-2025-10-24 18:57:02,660 - INFO - Gioco selezionato: alienchac - Alien Challenge (China)
-2025-10-24 18:57:04,811 - INFO - Gioco selezionato: alieninv - Alien Invasion
-2025-10-24 18:57:06,347 - INFO - 🔄 Download ROM: Alien Invasion
-2025-10-24 18:57:06,347 - INFO - 📁 Percorso destinazione: /userdata/roms/mame/alieninv.zip
-2025-10-24 18:57:06,347 - INFO - 🎮 Nome ROM: alieninv (proverà: zip, 7z)
-2025-10-24 18:57:06,347 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:57:06,347 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/alieninv.zip
-2025-10-24 18:57:06,347 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/alieninv.7z
-2025-10-24 18:57:06,347 - INFO - 📂 Cartella destinazione: ✅ Presente
-2025-10-24 18:57:06,347 - INFO - ✅ [Premi SPACE/Pulsante 1 per confermare o ESC/Pulsante 2 per annullare]
-2025-10-24 18:57:06,854 - INFO - ✅ Download confermato!
-2025-10-24 18:57:06,854 - INFO - 🔄 Avvio download: Alien Invasion
-2025-10-24 18:57:06,854 - INFO - 📁 Destinazione: /userdata/roms/mame/alieninv.zip
-2025-10-24 18:57:06,854 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:57:06,854 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/alieninv.zip
-2025-10-24 18:57:06,854 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/alieninv.7z
-2025-10-24 18:57:06,854 - INFO - 🔄 Avvio download ROM: alieninv
-2025-10-24 18:57:06,857 - INFO - 📋 Estensioni da provare: zip, 7z
-2025-10-24 18:57:06,858 - INFO - 📂 Directory creata: /userdata/roms/mame
-2025-10-24 18:57:06,858 - INFO - 🎯 Tentativo 1/2: ZIP
-2025-10-24 18:57:06,858 - INFO - 🌐 URL: https://archive.org/download/MAME0.139RomCollectionByGhostware/alieninv.zip
-2025-10-24 18:57:06,858 - INFO - 📁 Destinazione: /userdata/roms/mame/alieninv.zip
-2025-10-24 18:57:08,796 - INFO - 📏 Dimensione file: 0MB
-2025-10-24 18:57:08,797 - INFO - ✅ Download completato: alieninv.zip
-2025-10-24 18:57:08,797 - INFO - 📏 Dimensione file scaricato: 0MB
-2025-10-24 18:57:08,797 - INFO - 📁 File salvato in: /userdata/roms/mame/alieninv.zip
-2025-10-24 18:57:08,798 - INFO - 🎉 Download completato con successo!
-2025-10-24 18:57:13,947 - INFO - Gioco selezionato: aliens3 - Aliens (World set 3)
-2025-10-24 18:57:16,252 - INFO - 🔄 Download ROM: Aliens (World set 3)
-2025-10-24 18:57:16,252 - INFO - 📁 Percorso destinazione: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:57:16,252 - INFO - 🎮 Nome ROM: aliens3 (proverà: zip, 7z)
-2025-10-24 18:57:16,252 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:57:16,252 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.zip
-2025-10-24 18:57:16,252 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.7z
-2025-10-24 18:57:16,252 - INFO - 📂 Cartella destinazione: ✅ Presente
-2025-10-24 18:57:16,253 - INFO - ✅ [Premi SPACE/Pulsante 1 per confermare o ESC/Pulsante 2 per annullare]
-2025-10-24 18:57:16,795 - INFO - ✅ Download confermato!
-2025-10-24 18:57:16,795 - INFO - 🔄 Avvio download: Aliens (World set 3)
-2025-10-24 18:57:16,796 - INFO - 📁 Destinazione: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:57:16,796 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:57:16,796 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.zip
-2025-10-24 18:57:16,796 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.7z
-2025-10-24 18:57:16,796 - INFO - 🔄 Avvio download ROM: aliens3
-2025-10-24 18:57:16,799 - INFO - 📋 Estensioni da provare: zip, 7z
-2025-10-24 18:57:16,800 - INFO - 📂 Directory creata: /userdata/roms/mame
-2025-10-24 18:57:16,800 - INFO - 🎯 Tentativo 1/2: ZIP
-2025-10-24 18:57:16,800 - INFO - 🌐 URL: https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.zip
-2025-10-24 18:57:16,800 - INFO - 📁 Destinazione: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:57:19,004 - INFO - 📏 Dimensione file: 1MB
-2025-10-24 18:57:20,894 - INFO - 📥 Download: 1MB / 1MB (69.6%)
-2025-10-24 18:57:21,380 - INFO - ✅ Download completato: aliens3.zip
-2025-10-24 18:57:21,380 - INFO - 📏 Dimensione file scaricato: 1MB
-2025-10-24 18:57:21,380 - INFO - 📁 File salvato in: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:57:21,382 - INFO - 🎉 Download completato con successo!
-2025-10-24 18:57:23,400 - INFO - Gioco selezionato: aliens3 - Aliens (World set 3)
-2025-10-24 18:57:25,896 - INFO - 🔄 Download ROM: Aliens (World set 3)
-2025-10-24 18:57:25,896 - INFO - 📁 Percorso destinazione: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:57:25,896 - INFO - 🎮 Nome ROM: aliens3 (proverà: zip, 7z)
-2025-10-24 18:57:25,896 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:57:25,896 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.zip
-2025-10-24 18:57:25,896 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.7z
-2025-10-24 18:57:25,896 - INFO - 📂 Cartella destinazione: ✅ Presente
-2025-10-24 18:57:25,896 - INFO - ✅ [Premi SPACE/Pulsante 1 per confermare o ESC/Pulsante 2 per annullare]
-2025-10-24 18:57:26,436 - INFO - ✅ Download confermato!
-2025-10-24 18:57:26,436 - INFO - 🔄 Avvio download: Aliens (World set 3)
-2025-10-24 18:57:26,436 - INFO - 📁 Destinazione: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:57:26,436 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:57:26,437 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.zip
-2025-10-24 18:57:26,437 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.7z
-2025-10-24 18:57:26,437 - INFO - 🔄 Avvio download ROM: aliens3
-2025-10-24 18:57:26,437 - INFO - 📋 Estensioni da provare: zip, 7z
-2025-10-24 18:57:26,440 - INFO - 📂 Directory creata: /userdata/roms/mame
-2025-10-24 18:57:26,440 - INFO - 🎯 Tentativo 1/2: ZIP
-2025-10-24 18:57:26,440 - INFO - 🌐 URL: https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.zip
-2025-10-24 18:57:26,441 - INFO - 📁 Destinazione: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:57:29,148 - INFO - 📏 Dimensione file: 1MB
-2025-10-24 18:57:29,956 - INFO - 📥 Download: 1MB / 1MB (69.6%)
-2025-10-24 18:57:29,982 - INFO - ✅ Download completato: aliens3.zip
-2025-10-24 18:57:29,982 - INFO - 📏 Dimensione file scaricato: 1MB
-2025-10-24 18:57:29,982 - INFO - 📁 File salvato in: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:57:29,984 - INFO - 🎉 Download completato con successo!
-2025-10-24 18:58:21,362 - INFO - Gioco selezionato: aliens3 - Aliens (World set 3)
-2025-10-24 18:58:23,370 - INFO - 🔄 Download ROM: Aliens (World set 3)
-2025-10-24 18:58:23,370 - INFO - 📁 Percorso destinazione: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:58:23,370 - INFO - 🎮 Nome ROM: aliens3 (proverà: zip, 7z)
-2025-10-24 18:58:23,370 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:58:23,370 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.zip
-2025-10-24 18:58:23,370 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.7z
-2025-10-24 18:58:23,370 - INFO - 📂 Cartella destinazione: ✅ Presente
-2025-10-24 18:58:23,370 - INFO - ✅ [Premi SPACE/Pulsante 1 per confermare o ESC/Pulsante 2 per annullare]
-2025-10-24 18:58:28,275 - INFO - ✅ Download confermato!
-2025-10-24 18:58:28,275 - INFO - 🔄 Avvio download: Aliens (World set 3)
-2025-10-24 18:58:28,275 - INFO - 📁 Destinazione: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:58:28,275 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-24 18:58:28,275 - INFO -    1. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.zip
-2025-10-24 18:58:28,275 - INFO -    2. https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.7z
-2025-10-24 18:58:28,275 - INFO - 🔄 Avvio download ROM: aliens3
-2025-10-24 18:58:28,279 - INFO - 📋 Estensioni da provare: zip, 7z
-2025-10-24 18:58:28,279 - INFO - 📂 Directory creata: /userdata/roms/mame
-2025-10-24 18:58:28,279 - INFO - 🎯 Tentativo 1/2: ZIP
-2025-10-24 18:58:28,279 - INFO - 🌐 URL: https://archive.org/download/MAME0.139RomCollectionByGhostware/aliens3.zip
-2025-10-24 18:58:28,279 - INFO - 📁 Destinazione: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:58:30,832 - INFO - 📏 Dimensione file: 1MB
-2025-10-24 18:58:32,076 - INFO - 📥 Download: 1MB / 1MB (69.6%)
-2025-10-24 18:58:32,250 - INFO - ✅ Download completato: aliens3.zip
-2025-10-24 18:58:32,250 - INFO - 📏 Dimensione file scaricato: 1MB
-2025-10-24 18:58:32,250 - INFO - 📁 File salvato in: /userdata/roms/mame/aliens3.zip
-2025-10-24 18:58:32,252 - INFO - 🎉 Download completato con successo!
-2025-10-24 18:59:24,273 - INFO - Torno al menu delle piattaforme
+2025-10-25 16:36:30,525 - INFO - === LRscript - Retro Game Manager ===
+2025-10-25 16:36:30,525 - INFO - Avvio applicazione: 2025-10-25 16:36:30
+2025-10-25 16:36:30,807 - INFO - Modalità risoluzione: 1280x1024 forzata
+2025-10-25 16:36:30,807 - INFO - Risoluzione finale: 1280x1024
+2025-10-25 16:36:30,807 - INFO - Font fissi (nessuna scalatura): L=32, M=24, S=18, T=14
+2025-10-25 16:36:30,807 - WARNING - Font personalizzato non trovato: ./resources/fonts/None, uso font di sistema
+2025-10-25 16:36:31,552 - INFO - Avviato in modalità fullscreen: 1280x1024
+2025-10-25 16:36:31,552 - INFO - Premi F11 per passare a modalità finestra
+2025-10-25 16:36:31,553 - WARNING - Errore parsing XML: not well-formed (invalid token): line 9, column 52, provo a correggere automaticamente
+2025-10-25 16:36:31,553 - INFO - Versione programma: 0.1.5
+2025-10-25 16:36:31,553 - INFO - Caricate 3 piattaforme dal file XML
+2025-10-25 16:36:31,554 - INFO - Logo caricato: ./resources/LRscript.png -> 133x100
+2025-10-25 16:36:31,554 - INFO - Icona configurazione caricata: ./resources/icons/system.png -> 42x42
+2025-10-25 16:36:31,555 - INFO - Caricate 5 icone PNG per il footer del menu
+2025-10-25 16:36:31,563 - INFO - Caricate 6 immagini da ./resources/logos
+2025-10-25 16:36:31,563 - INFO - Configurazione joystick caricata da ./joystick_mapping.json
+2025-10-25 16:36:31,564 - INFO - Configurazione joystick caricata: {'button_1': 2, 'button_2': 1, 'button_3': 0, 'l1': 4, 'r1': 5, 'start': 9, 'select': -1}
+2025-10-25 16:36:31,564 - INFO - Dispositivi di input rilevati: 1
+2025-10-25 16:36:31,618 - INFO - Joystick selezionato: USB gamepad (indice 0)
+2025-10-25 16:36:31,618 - INFO - Player 0 del cabinato sarà utilizzato per i controlli
+2025-10-25 16:36:31,618 - INFO - Caricamento sfondo: ./resources/sfondo_arcade.jpg
+2025-10-25 16:36:31,628 - INFO - Sfondo caricato: 1280x1024
+2025-10-25 16:36:31,629 - INFO - Caricate 5 icone PNG per il footer
+2025-10-25 16:36:31,629 - INFO - Dimensioni icone footer: 26x26 per risoluzione 1280x1024
+2025-10-25 16:36:31,629 - INFO - LRscript - Retro Game Manager (Pygame)
+2025-10-25 16:36:31,629 - INFO - JOYSTICK RILEVATO: USB gamepad
+2025-10-25 16:36:47,407 - INFO - Piattaforma selezionata: Mame2010 romset 0.139
+2025-10-25 16:36:47,407 - INFO - Percorsi aggiornati per: Mame2010 romset 0.139
+2025-10-25 16:36:47,407 - INFO - Caricamento giochi da XML: ./dats/MAME0.139u4.dat
+2025-10-25 16:36:47,742 - INFO - Ordinamento alfabetico in corso...
+2025-10-25 16:36:47,744 - INFO - Ordinamento completato
+2025-10-25 16:36:47,767 - INFO - Immagini e informazioni di test caricate
+2025-10-25 16:36:48,888 - INFO - Gioco selezionato: 10yardj - 10-Yard Fight (Japan)
+2025-10-25 16:36:54,069 - INFO - Back: Torno al menu delle piattaforme
+2025-10-25 16:36:55,275 - INFO - Piattaforma selezionata: FBNeo1.0.0.03
+2025-10-25 16:36:55,275 - INFO - Percorsi aggiornati per: FBNeo1.0.0.03
+2025-10-25 16:36:55,275 - INFO - Caricamento giochi da XML: ./dats/FBNeo1.0.0.03.dat
+2025-10-25 16:36:55,544 - INFO - Ordinamento alfabetico in corso...
+2025-10-25 16:36:55,546 - INFO - Ordinamento completato
+2025-10-25 16:36:55,577 - INFO - Immagini e informazioni di test caricate
+2025-10-25 16:36:57,147 - INFO - Gioco selezionato: 1943 - 1943: The Battle of Midway (Eu...
+2025-10-25 16:36:59,997 - INFO - 🔄 Download ROM: 1943: The Battle of Midway (Euro)
+2025-10-25 16:36:59,997 - INFO - 📁 Percorso destinazione: /userdata/roms/fbneo/1943.zip
+2025-10-25 16:36:59,997 - INFO - 🎮 Nome ROM: 1943 (proverà: zip, 7z)
+2025-10-25 16:36:59,997 - INFO - 🌐 URL download da provare: 2 opzioni
+2025-10-25 16:36:59,997 - INFO -    1. https://archive.org/download/svcpcb.7z/Vintage%20Arcade/1943.zip
+2025-10-25 16:36:59,997 - INFO -    2. https://archive.org/download/svcpcb.7z/Vintage%20Arcade/1943.7z
+2025-10-25 16:36:59,997 - INFO - 📂 Cartella destinazione: ❌ Non presente
+2025-10-25 16:36:59,997 - WARNING - ⚠️ [Cartella non presente - Download non disponibile]
+2025-10-25 16:37:02,086 - INFO - ❌ Download annullato
+2025-10-25 16:37:03,302 - INFO - 🔄 Download ROM: 1943: The Battle of Midway (Euro)
+2025-10-25 16:37:03,302 - INFO - 📁 Percorso destinazione: /userdata/roms/fbneo/1943.zip
+2025-10-25 16:37:03,302 - INFO - 🎮 Nome ROM: 1943 (proverà: zip, 7z)
+2025-10-25 16:37:03,302 - INFO - 🌐 URL download da provare: 2 opzioni
+2025-10-25 16:37:03,302 - INFO -    1. https://archive.org/download/svcpcb.7z/Vintage%20Arcade/1943.zip
+2025-10-25 16:37:03,302 - INFO -    2. https://archive.org/download/svcpcb.7z/Vintage%20Arcade/1943.7z
+2025-10-25 16:37:03,302 - INFO - 📂 Cartella destinazione: ❌ Non presente
+2025-10-25 16:37:03,302 - WARNING - ⚠️ [Cartella non presente - Download non disponibile]
+2025-10-25 16:37:06,547 - INFO - ❌ Download annullato
+2025-10-25 16:37:07,717 - INFO - Gioco selezionato: 1943bj - 1943: Midway Kaisen (bootleg)
+2025-10-25 16:37:09,244 - INFO - Back: Torno al menu delle piattaforme
+2025-10-25 16:37:13,600 - INFO - Pulsante 9 premuto in schermata config, modalità cattura: False
+2025-10-25 16:37:13,600 - INFO - Risultato non gestito: None
+2025-10-25 16:37:16,749 - INFO - Pulsante 2 premuto in schermata config, modalità cattura: False
+2025-10-25 16:37:16,749 - INFO - Conferma premuta, selected_index: 9, len(buttons): 7
+2025-10-25 16:37:16,749 - INFO - Torna al menu
+2025-10-25 16:37:16,749 - INFO - Uscita dalla schermata config
+2025-10-25 16:37:30,824 - INFO - Start premuto - Uscita applicazione
