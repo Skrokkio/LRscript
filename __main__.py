@@ -17,7 +17,7 @@ FONT_SCALE_FACTOR = 1 # Riduce le dimensioni del font (0.5 = metà, 1.0 = normal
 # =============================================================================
 # CONFIGURAZIONE RISOLUZIONE - MODIFICA QUESTI VALORE PER CAMBIARE RISOLUZIONE
 # =============================================================================
-RESOLUTION_MODE = 1 # 1 = 1280x1024 forzata, 2 = auto-rilevamento (default)
+RESOLUTION_MODE = 2 # 1 = 1280x1024 forzata, 2 = auto-rilevamento (default)
 # =============================================================================
 
 import pygame
