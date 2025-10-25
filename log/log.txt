@@ -1,68 +1,52 @@
-2025-10-25 16:36:30,525 - INFO - === LRscript - Retro Game Manager ===
-2025-10-25 16:36:30,525 - INFO - Avvio applicazione: 2025-10-25 16:36:30
-2025-10-25 16:36:30,807 - INFO - Modalità risoluzione: 1280x1024 forzata
-2025-10-25 16:36:30,807 - INFO - Risoluzione finale: 1280x1024
-2025-10-25 16:36:30,807 - INFO - Font fissi (nessuna scalatura): L=32, M=24, S=18, T=14
-2025-10-25 16:36:30,807 - WARNING - Font personalizzato non trovato: ./resources/fonts/None, uso font di sistema
-2025-10-25 16:36:31,552 - INFO - Avviato in modalità fullscreen: 1280x1024
-2025-10-25 16:36:31,552 - INFO - Premi F11 per passare a modalità finestra
-2025-10-25 16:36:31,553 - WARNING - Errore parsing XML: not well-formed (invalid token): line 9, column 52, provo a correggere automaticamente
-2025-10-25 16:36:31,553 - INFO - Versione programma: 0.1.5
-2025-10-25 16:36:31,553 - INFO - Caricate 3 piattaforme dal file XML
-2025-10-25 16:36:31,554 - INFO - Logo caricato: ./resources/LRscript.png -> 133x100
-2025-10-25 16:36:31,554 - INFO - Icona configurazione caricata: ./resources/icons/system.png -> 42x42
-2025-10-25 16:36:31,555 - INFO - Caricate 5 icone PNG per il footer del menu
-2025-10-25 16:36:31,563 - INFO - Caricate 6 immagini da ./resources/logos
-2025-10-25 16:36:31,563 - INFO - Configurazione joystick caricata da ./joystick_mapping.json
-2025-10-25 16:36:31,564 - INFO - Configurazione joystick caricata: {'button_1': 2, 'button_2': 1, 'button_3': 0, 'l1': 4, 'r1': 5, 'start': 9, 'select': -1}
-2025-10-25 16:36:31,564 - INFO - Dispositivi di input rilevati: 1
-2025-10-25 16:36:31,618 - INFO - Joystick selezionato: USB gamepad (indice 0)
-2025-10-25 16:36:31,618 - INFO - Player 0 del cabinato sarà utilizzato per i controlli
-2025-10-25 16:36:31,618 - INFO - Caricamento sfondo: ./resources/sfondo_arcade.jpg
-2025-10-25 16:36:31,628 - INFO - Sfondo caricato: 1280x1024
-2025-10-25 16:36:31,629 - INFO - Caricate 5 icone PNG per il footer
-2025-10-25 16:36:31,629 - INFO - Dimensioni icone footer: 26x26 per risoluzione 1280x1024
-2025-10-25 16:36:31,629 - INFO - LRscript - Retro Game Manager (Pygame)
-2025-10-25 16:36:31,629 - INFO - JOYSTICK RILEVATO: USB gamepad
-2025-10-25 16:36:47,407 - INFO - Piattaforma selezionata: Mame2010 romset 0.139
-2025-10-25 16:36:47,407 - INFO - Percorsi aggiornati per: Mame2010 romset 0.139
-2025-10-25 16:36:47,407 - INFO - Caricamento giochi da XML: ./dats/MAME0.139u4.dat
-2025-10-25 16:36:47,742 - INFO - Ordinamento alfabetico in corso...
-2025-10-25 16:36:47,744 - INFO - Ordinamento completato
-2025-10-25 16:36:47,767 - INFO - Immagini e informazioni di test caricate
-2025-10-25 16:36:48,888 - INFO - Gioco selezionato: 10yardj - 10-Yard Fight (Japan)
-2025-10-25 16:36:54,069 - INFO - Back: Torno al menu delle piattaforme
-2025-10-25 16:36:55,275 - INFO - Piattaforma selezionata: FBNeo1.0.0.03
-2025-10-25 16:36:55,275 - INFO - Percorsi aggiornati per: FBNeo1.0.0.03
-2025-10-25 16:36:55,275 - INFO - Caricamento giochi da XML: ./dats/FBNeo1.0.0.03.dat
-2025-10-25 16:36:55,544 - INFO - Ordinamento alfabetico in corso...
-2025-10-25 16:36:55,546 - INFO - Ordinamento completato
-2025-10-25 16:36:55,577 - INFO - Immagini e informazioni di test caricate
-2025-10-25 16:36:57,147 - INFO - Gioco selezionato: 1943 - 1943: The Battle of Midway (Eu...
-2025-10-25 16:36:59,997 - INFO - 🔄 Download ROM: 1943: The Battle of Midway (Euro)
-2025-10-25 16:36:59,997 - INFO - 📁 Percorso destinazione: /userdata/roms/fbneo/1943.zip
-2025-10-25 16:36:59,997 - INFO - 🎮 Nome ROM: 1943 (proverà: zip, 7z)
-2025-10-25 16:36:59,997 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-25 16:36:59,997 - INFO -    1. https://archive.org/download/svcpcb.7z/Vintage%20Arcade/1943.zip
-2025-10-25 16:36:59,997 - INFO -    2. https://archive.org/download/svcpcb.7z/Vintage%20Arcade/1943.7z
-2025-10-25 16:36:59,997 - INFO - 📂 Cartella destinazione: ❌ Non presente
-2025-10-25 16:36:59,997 - WARNING - ⚠️ [Cartella non presente - Download non disponibile]
-2025-10-25 16:37:02,086 - INFO - ❌ Download annullato
-2025-10-25 16:37:03,302 - INFO - 🔄 Download ROM: 1943: The Battle of Midway (Euro)
-2025-10-25 16:37:03,302 - INFO - 📁 Percorso destinazione: /userdata/roms/fbneo/1943.zip
-2025-10-25 16:37:03,302 - INFO - 🎮 Nome ROM: 1943 (proverà: zip, 7z)
-2025-10-25 16:37:03,302 - INFO - 🌐 URL download da provare: 2 opzioni
-2025-10-25 16:37:03,302 - INFO -    1. https://archive.org/download/svcpcb.7z/Vintage%20Arcade/1943.zip
-2025-10-25 16:37:03,302 - INFO -    2. https://archive.org/download/svcpcb.7z/Vintage%20Arcade/1943.7z
-2025-10-25 16:37:03,302 - INFO - 📂 Cartella destinazione: ❌ Non presente
-2025-10-25 16:37:03,302 - WARNING - ⚠️ [Cartella non presente - Download non disponibile]
-2025-10-25 16:37:06,547 - INFO - ❌ Download annullato
-2025-10-25 16:37:07,717 - INFO - Gioco selezionato: 1943bj - 1943: Midway Kaisen (bootleg)
-2025-10-25 16:37:09,244 - INFO - Back: Torno al menu delle piattaforme
-2025-10-25 16:37:13,600 - INFO - Pulsante 9 premuto in schermata config, modalità cattura: False
-2025-10-25 16:37:13,600 - INFO - Risultato non gestito: None
-2025-10-25 16:37:16,749 - INFO - Pulsante 2 premuto in schermata config, modalità cattura: False
-2025-10-25 16:37:16,749 - INFO - Conferma premuta, selected_index: 9, len(buttons): 7
-2025-10-25 16:37:16,749 - INFO - Torna al menu
-2025-10-25 16:37:16,749 - INFO - Uscita dalla schermata config
-2025-10-25 16:37:30,824 - INFO - Start premuto - Uscita applicazione
+2025-10-25 17:02:25,800 - INFO - === LRscript - Retro Game Manager ===
+2025-10-25 17:02:25,800 - INFO - Avvio applicazione: 2025-10-25 17:02:25
+2025-10-25 17:02:26,034 - INFO - Modalità risoluzione: 1280x1024 forzata
+2025-10-25 17:02:26,035 - INFO - Risoluzione finale: 1280x1024
+2025-10-25 17:02:26,035 - INFO - Font fissi (nessuna scalatura): L=32, M=24, S=18, T=14
+2025-10-25 17:02:26,035 - WARNING - Font personalizzato non trovato: ./resources/fonts/None, uso font di sistema
+2025-10-25 17:02:26,769 - INFO - Avviato in modalità fullscreen: 1280x1024
+2025-10-25 17:02:26,770 - INFO - Premi F11 per passare a modalità finestra
+2025-10-25 17:02:26,770 - WARNING - Errore parsing XML: not well-formed (invalid token): line 9, column 52, provo a correggere automaticamente
+2025-10-25 17:02:26,771 - INFO - Versione programma: 0.1.5
+2025-10-25 17:02:26,771 - INFO - Caricate 3 piattaforme dal file XML
+2025-10-25 17:02:26,772 - INFO - Logo caricato: ./resources/LRscript.png -> 133x100
+2025-10-25 17:02:26,772 - INFO - Icona configurazione caricata: ./resources/icons/system.png -> 42x42
+2025-10-25 17:02:26,772 - INFO - Caricate 5 icone PNG per il footer del menu
+2025-10-25 17:02:26,781 - INFO - Caricate 6 immagini da ./resources/logos
+2025-10-25 17:02:26,781 - INFO - Configurazione joystick caricata da ./joystick_mapping.json
+2025-10-25 17:02:26,781 - INFO - Configurazione joystick caricata: {'button_1': 2, 'button_2': 1, 'button_3': 0, 'l1': 4, 'r1': 5, 'start': 9, 'select': -1}
+2025-10-25 17:02:26,781 - INFO - Dispositivi di input rilevati: 1
+2025-10-25 17:02:26,835 - INFO - Joystick selezionato: USB gamepad (indice 0)
+2025-10-25 17:02:26,835 - INFO - Player 0 del cabinato sarà utilizzato per i controlli
+2025-10-25 17:02:26,835 - INFO - Caricamento sfondo: ./resources/sfondo_arcade.jpg
+2025-10-25 17:02:26,844 - INFO - Sfondo caricato: 1280x1024
+2025-10-25 17:02:26,845 - INFO - Caricate 5 icone PNG per il footer
+2025-10-25 17:02:26,845 - INFO - Dimensioni icone footer: 26x26 per risoluzione 1280x1024
+2025-10-25 17:02:26,845 - INFO - LRscript - Retro Game Manager (Pygame)
+2025-10-25 17:02:26,845 - INFO - JOYSTICK RILEVATO: USB gamepad
+2025-10-25 17:02:31,479 - INFO - Piattaforma selezionata: Mame2010 romset 0.139
+2025-10-25 17:02:31,479 - INFO - Percorsi aggiornati per: Mame2010 romset 0.139
+2025-10-25 17:02:31,479 - INFO - Caricamento giochi da XML: ./dats/MAME0.139u4.dat
+2025-10-25 17:02:31,812 - INFO - Ordinamento alfabetico in corso...
+2025-10-25 17:02:31,814 - INFO - Ordinamento completato
+2025-10-25 17:02:31,836 - INFO - Immagini e informazioni di test caricate
+2025-10-25 17:02:33,070 - INFO - Gioco selezionato: 10yardj - 10-Yard Fight (Japan)
+2025-10-25 17:02:34,671 - INFO - Back: Torno al menu delle piattaforme
+2025-10-25 17:02:35,317 - INFO - Piattaforma selezionata: MAME_2003-Plus
+2025-10-25 17:02:35,318 - INFO - Percorsi aggiornati per: MAME_2003-Plus
+2025-10-25 17:02:35,318 - INFO - Caricamento giochi da XML: ./dats/mame2003-plus.xml
+2025-10-25 17:02:35,833 - INFO - Ordinamento alfabetico in corso...
+2025-10-25 17:02:35,835 - INFO - Ordinamento completato
+2025-10-25 17:02:35,896 - INFO - Immagini e informazioni di test caricate
+2025-10-25 17:02:36,819 - INFO - Gioco selezionato: 1942b - 1942 (set 3)
+2025-10-25 17:02:37,945 - INFO - Back: Torno al menu delle piattaforme
+2025-10-25 17:02:38,928 - INFO - Piattaforma selezionata: FBNeo1.0.0.03
+2025-10-25 17:02:38,928 - INFO - Percorsi aggiornati per: FBNeo1.0.0.03
+2025-10-25 17:02:38,928 - INFO - Caricamento giochi da XML: ./dats/FBNeo1.0.0.03.dat
+2025-10-25 17:02:39,220 - INFO - Ordinamento alfabetico in corso...
+2025-10-25 17:02:39,222 - INFO - Ordinamento completato
+2025-10-25 17:02:39,250 - INFO - Immagini e informazioni di test caricate
+2025-10-25 17:02:40,433 - INFO - Gioco selezionato: 1942a - 1942 (Revision A)
+2025-10-25 17:02:42,546 - INFO - Back: Torno al menu delle piattaforme
+2025-10-25 17:02:43,597 - INFO - Start premuto - Uscita applicazione
+2025-10-25 17:02:43,616 - INFO - 🗑️ Cache completa pulita alla chiusura: /home/skrokkio/Dropbox/coding/LRscript/cache

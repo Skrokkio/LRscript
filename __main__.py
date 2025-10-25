@@ -1615,38 +1615,7 @@ class ArcadeUI:
                     # Percorso file locale
                     local_file = os.path.join(local_folder, f"{rom_name}.png")
                     
-                    # Controlla se il file esiste già localmente
-                    if os.path.exists(local_file):
-                        print(f"✅ Immagine {img_type} trovata localmente")
-                        print(f"   📁 Percorso: {local_file}")
-                        file_size = os.path.getsize(local_file)
-                        print(f"   📏 Dimensione file: {file_size} bytes")
-                        try:
-                            # Carica l'immagine con Pygame
-                            # Verifica il formato dell'immagine
-                            with open(local_file, "rb") as f:
-                                header = f.read(8)
-                                # Verifica se è un file PNG valido (inizia con 89 50 4E 47 0D 0A 1A 0A)
-                                if header.startswith(b'\x89PNG\r\n\x1a\n'):
-                                    image = pygame.image.load(local_file)
-                                else:
-                                    print(f"⚠️ Formato immagine non valido per {img_type}")
-                                    raise ValueError("Formato immagine non valido")
-                            
-                            # Mantieni l'immagine originale per una migliore qualità
-                            # Non ridimensioniamo qui, lo faremo durante la visualizzazione
-                            print(f"   📐 Dimensioni originali: {image.get_width()}x{image.get_height()}")
-                            
-                            # Salva l'immagine originale senza ridimensionamento
-                            final_surface = image.copy()
-                            
-                            # Aggiorna il dizionario delle immagini
-                            self.game_images[img_type] = final_surface
-                            continue  # Passa alla prossima immagine
-                        except Exception as e:
-                            print(f"⚠️ Errore nel caricamento locale di {img_type}: {e}")
-                    
-                    # Se non esiste localmente, prova a scaricarla
+                    # Scarica sempre l'immagine (rimosso controllo file locali)
                     print(f"🔄 Download immagine {img_type}...")
                     print(f"   📡 URL: {url}")
                     print(f"   💾 Destinazione: {local_file}")
@@ -2658,6 +2627,44 @@ class ArcadeUI:
                 
                 x_offset += icon_spacing
     
+    def clear_cache_on_exit(self):
+        """Pulisce tutta la cache alla chiusura dell'applicazione"""
+        try:
+            # Pulisce sempre la cartella cache principale (non solo quella della piattaforma corrente)
+            cache_folder = os.path.join(os.getcwd(), "cache")
+            
+            if os.path.exists(cache_folder):
+                import shutil
+                shutil.rmtree(cache_folder)
+                print(f"🗑️ Cache completa pulita: {cache_folder}")
+                logger.info(f"🗑️ Cache completa pulita alla chiusura: {cache_folder}")
+            else:
+                print("ℹ️ Nessuna cache da pulire")
+                logger.info("ℹ️ Nessuna cache da pulire")
+        except Exception as e:
+            print(f"⚠️ Errore pulizia cache: {e}")
+            logger.error(f"⚠️ Errore pulizia cache: {e}")
+    
+    def clear_all_cache(self):
+        """Funzione di utilità per pulire manualmente tutta la cache"""
+        try:
+            cache_folder = os.path.join(os.getcwd(), "cache")
+            
+            if os.path.exists(cache_folder):
+                import shutil
+                shutil.rmtree(cache_folder)
+                print(f"🗑️ Cache manualmente pulita: {cache_folder}")
+                logger.info(f"🗑️ Cache manualmente pulita: {cache_folder}")
+                return True
+            else:
+                print("ℹ️ Nessuna cache da pulire")
+                logger.info("ℹ️ Nessuna cache da pulire")
+                return False
+        except Exception as e:
+            print(f"⚠️ Errore pulizia cache manuale: {e}")
+            logger.error(f"⚠️ Errore pulizia cache manuale: {e}")
+            return False
+
     def run(self):
         """Loop principale dell'applicazione"""
         logger.info("LRscript - Retro Game Manager (Pygame)")
@@ -2669,15 +2676,18 @@ class ArcadeUI:
         # Controlli disponibili (non mostrati nel terminale per pulizia)
         
         running = True
-        while running:
-            events = pygame.event.get()
-            running = self.handle_input(events)
-            
-            self.draw()
-            self.clock.tick(FPS)
-        
-        pygame.quit()
-        sys.exit()
+        try:
+            while running:
+                events = pygame.event.get()
+                running = self.handle_input(events)
+                
+                self.draw()
+                self.clock.tick(FPS)
+        finally:
+            # Pulisce la cache prima di uscire
+            self.clear_cache_on_exit()
+            pygame.quit()
+            sys.exit()
 
 def main():
     """Funzione principale"""

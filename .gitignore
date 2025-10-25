@@ -18,4 +18,6 @@ code/platform_menu.py.backup_20251024_191439
 
 # Cartella cache
 cache/
+__pycache__/
 install.sh.backup_dynamic_version_20251025_164342
+log/log.txt
