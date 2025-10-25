@@ -18,7 +18,10 @@ echo "    LRscript - Retro Game Manager - Installer"
 echo "========================================"
 echo ""
 
-echo "Avvio installazione LRscript..."
+# Leggi la versione dal file platforms.xml
+VERSION=$(grep -o '<version>[^<]*</version>' platforms.xml | sed 's/<version>//g' | sed 's/<\/version>//g' 2>/dev/null || echo "unknown")
+
+echo "Avvio installazione LRscript v$VERSION..."
 
 # Funzione per chiedere conferma all'utente
 ask_user_confirmation() {
@@ -116,7 +119,7 @@ echo ""
 echo "✅ Installazione completata!"
 
 echo "Percorso: /userdata/roms/ports/LRscript"
-echo "Avvia LRscript dal menu Ports di Batocera"
+echo "Avvia LRscript v$VERSION dal menu Ports di Batocera"
 echo ""
 
 
